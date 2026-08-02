@@ -1,0 +1,2516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <!-- Verified package: MEG-TEC v2026.08.03-00:00 -->
+  <meta name="description" content="MYEDEN monthly tuition and enrichment class payment form" />
+  <title>MEG-TEC v2026.08.03-00:00</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#124b82">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <style id="printPageStyle">@page { size: A4 portrait; margin: 6mm; }</style>
+  <style>
+    :root {
+      --navy-950: #06182d;
+      --navy-900: #082544;
+      --navy-800: #0b315b;
+      --navy-700: #124b82;
+      --blue-100: #e8f2fb;
+      --blue-50: #f4f8fc;
+      --ink: #10233a;
+      --muted: #60728a;
+      --line: #26384d;
+      --paper: #ffffff;
+      --app-bg: #dfe9f4;
+      --danger: #b42318;
+      --success: #067647;
+      --weekend: #ffe2e2;
+      --weekend-border: #e89999;
+      --radius: 14px;
+      --shadow: 0 18px 46px rgba(6, 24, 45, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--navy-950); }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, var(--navy-950) 0, var(--navy-900) 230px, var(--app-bg) 230px, #eef4fa 100%);
+      min-height: 100vh;
+    }
+
+    button, input, select { font: inherit; }
+
+    .app-shell {
+      width: min(1760px, calc(100% - 28px));
+      margin: 20px auto 56px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 14px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius);
+      background: rgba(8, 37, 68, 0.96);
+      color: white;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 8px;
+      z-index: 20;
+    }
+
+    .toolbar__title {
+      margin-right: auto;
+      min-width: 250px;
+    }
+
+    .toolbar__title strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .toolbar__title span {
+      display: block;
+      margin-top: 2px;
+      color: #c6d8e9;
+      font-size: 0.79rem;
+    }
+
+    .toolbar__field {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: .79rem;
+      font-weight: 800;
+    }
+
+    .toolbar__field select {
+      border: 1px solid #9db2c8;
+      border-radius: 7px;
+      background: white;
+      color: var(--navy-950);
+      padding: 6px 8px;
+      font-weight: 800;
+    }
+
+    .btn {
+      border: 1px solid #aec0d2;
+      border-radius: 9px;
+      background: #fff;
+      color: var(--navy-950);
+      padding: 8px 11px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.15s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); border-color: white; }
+    .btn:focus-visible { outline: 3px solid rgba(130, 196, 255, .45); outline-offset: 2px; }
+    .btn--primary { background: #4aa3e6; color: #06182d; border-color: #74baf0; }
+    .btn--primary:hover { background: #75bdf2; }
+    .btn--danger { color: var(--danger); }
+    .btn--small { padding: 5px 8px; font-size: .78rem; }
+
+    .status {
+      width: 100%;
+      min-height: 1.1em;
+      margin-top: 1px;
+      color: #9ff0c9;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .paper {
+      background: var(--paper);
+      border-radius: 17px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #b9c9d9;
+    }
+
+    .document-header {
+      margin: 22px 22px 0;
+      background: linear-gradient(135deg, var(--navy-950), var(--navy-800));
+      color: white;
+      padding: 18px 20px 17px;
+      border-radius: 7px 7px 0 0;
+    }
+
+    .document-title {
+      text-align: center;
+      font-weight: 950;
+      font-size: clamp(1.15rem, 2.05vw, 2rem);
+      line-height: 1.12;
+      letter-spacing: .012em;
+      text-transform: uppercase;
+    }
+
+    .year-line {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .document-header input,
+    .document-header select {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid #c8d4e0;
+      background: white;
+      color: #071a30;
+      border-radius: 4px;
+      padding: 6px 9px;
+      font-weight: 800;
+    }
+
+    .year-input {
+      flex: 0 0 126px;
+      width: 126px !important;
+      min-width: 126px !important;
+      text-align: center;
+      font-size: 1.05em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #serialNo {
+      background: #eaf3fb;
+      color: var(--navy-950);
+      letter-spacing: .035em;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(330px, .95fr);
+      gap: 9px 22px;
+      margin-top: 17px;
+    }
+
+    .meta-column { display: grid; gap: 8px; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 155px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .field-row label {
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .time-fields {
+      display: grid;
+      grid-template-columns: auto minmax(110px, 1fr) auto minmax(110px, 1fr);
+      align-items: center;
+      gap: 7px;
+      color: white;
+    }
+
+    .schedule-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 18px;
+      margin: 0 22px;
+      padding: 10px 13px;
+      color: var(--navy-950);
+      background: var(--blue-100);
+      border: 2px solid var(--navy-800);
+      border-top: 0;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .same-date-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .same-date-control input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--navy-700);
+    }
+
+    .weekend-key {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #6f2525;
+    }
+
+    .weekend-swatch {
+      width: 18px;
+      height: 14px;
+      border: 1px solid var(--weekend-border);
+      background: var(--weekend);
+      border-radius: 3px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 0 22px;
+      border-left: 2px solid var(--line);
+      border-right: 2px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      min-width: 1540px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border-right: 1.25px solid var(--line);
+      border-bottom: 1.25px solid var(--line);
+      padding: 0;
+      vertical-align: middle;
+    }
+
+    th:last-child, td:last-child { border-right: 0; }
+
+    thead th {
+      background: var(--navy-950);
+      color: white;
+      padding: 9px 4px;
+      font-size: .82rem;
+      line-height: 1.1;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    thead .month-header {
+      background: #f8fbfe;
+      color: var(--navy-950);
+      border-top: 2px solid var(--navy-950);
+      padding: 5px;
+    }
+
+    .month-header select {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: center;
+      font-weight: 950;
+      text-transform: uppercase;
+      outline: none;
+      color: var(--navy-950);
+    }
+
+    .slot-header { background: var(--navy-800); }
+
+    .col-no { width: 48px; }
+    .col-name { width: 300px; }
+    .col-kind { width: 132px; }
+    .col-day { width: 49px; }
+    .col-money { width: 105px; }
+    .col-action { width: 58px; }
+
+    tbody td { background: #fff; }
+    tbody tr:nth-child(4n+3) td,
+    tbody tr:nth-child(4n+4) td { background: #f7fafd; }
+
+    .cell-input,
+    .day-select {
+      width: 100%;
+      min-height: 35px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 5px 7px;
+      color: #081b31;
+      outline: none;
+    }
+
+    .cell-input:focus,
+    .day-select:focus {
+      box-shadow: inset 0 0 0 2px #2b85c7;
+      background: #ecf7ff;
+    }
+
+    .student-name {
+      font-weight: 800;
+      text-transform: uppercase;
+      padding-left: 10px;
+    }
+
+    .number-cell { text-align: center; font-weight: 900; }
+    .day-kind { text-align: center; font-weight: 800; font-size: .8rem; padding: 4px; }
+    .day-select { text-align: center; text-align-last: center; padding: 3px 1px; cursor: pointer; }
+    .money-input { text-align: right; font-variant-numeric: tabular-nums; padding-right: 9px; }
+    .action-cell { text-align: center; }
+
+    td.weekend {
+      background: var(--weekend) !important;
+      box-shadow: inset 0 0 0 1px var(--weekend-border);
+    }
+
+    td.weekend .day-select { color: #8a1f1f; font-weight: 900; }
+
+    tfoot td {
+      background: var(--navy-950);
+      color: white;
+      font-weight: 900;
+      padding: 9px 8px;
+    }
+
+    .total-label {
+      text-align: center;
+      font-size: 1.35rem;
+      letter-spacing: .02em;
+    }
+
+    .total-number { text-align: right; font-variant-numeric: tabular-nums; }
+
+    .document-footer { padding: 10px 22px 26px; }
+
+    .note {
+      margin: 0;
+      font-size: .78rem;
+      font-style: italic;
+      font-weight: 800;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-top: 28px;
+      color: var(--navy-950);
+      font-size: .76rem;
+    }
+
+    .footer-meta {
+      display: grid;
+      gap: 4px;
+    }
+
+    .generated-stamp {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .add-student-table-row td {
+      padding: 10px;
+      text-align: center;
+      background: #edf4fb;
+      border-top: 1.25px solid var(--line);
+    }
+
+    .add-student-table-btn {
+      min-width: 170px;
+    }
+
+    .settings-panel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 12px;
+      padding: 16px 22px 18px;
+      background: #edf3f8;
+      border-top: 1px solid #c5d3df;
+    }
+
+    .settings-panel label {
+      display: grid;
+      gap: 5px;
+      font-size: .79rem;
+      color: #40566f;
+      font-weight: 850;
+    }
+
+    .settings-panel input {
+      width: 100%;
+      border: 1px solid #aebfd0;
+      border-radius: 8px;
+      padding: 8px 9px;
+      background: white;
+      color: var(--navy-950);
+    }
+
+    .privacy-note {
+      margin: 14px 22px 20px;
+      padding: 11px 13px;
+      border-left: 4px solid var(--navy-700);
+      background: #edf6fd;
+      font-size: .8rem;
+      color: #334d68;
+    }
+
+    .file-input { display: none; }
+
+    @media (max-width: 980px) {
+      .meta-grid { grid-template-columns: 1fr; }
+      .settings-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .document-header, .table-wrap, .schedule-bar { margin-left: 12px; margin-right: 12px; }
+      .document-footer { padding-left: 12px; padding-right: 12px; }
+    }
+
+    @media (max-width: 600px) {
+      .app-shell { width: calc(100% - 12px); margin-top: 7px; }
+      .toolbar { top: 3px; border-radius: 10px; }
+      .toolbar__title { width: 100%; }
+      .field-row { grid-template-columns: 1fr; gap: 4px; }
+      .time-fields { grid-template-columns: auto 1fr; }
+      .settings-panel { grid-template-columns: 1fr; }
+      .document-title { font-size: 1.05rem; }
+      .year-input { flex-basis: 112px; width: 112px !important; min-width: 112px !important; }
+    }
+
+    @media print {
+      * { print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
+      html, body { background: white !important; }
+      .app-shell { width: 100%; margin: 0; }
+      .toolbar, .settings-panel, .privacy-note, .schedule-bar, .col-action, .action-cell, .add-student-table-body, #topUserBar, .no-print { display: none !important; }
+      tr.output-empty { display: none !important; }
+      input::placeholder { color: transparent !important; opacity: 0 !important; }
+      .paper { box-shadow: none; border: 0; border-radius: 0; overflow: visible; }
+      .document-header { margin: 0; padding: 3.2mm 4mm 2.8mm; border-radius: 0; }
+      .document-title { font-size: 13.5pt; line-height: 1.05; }
+      .year-line { gap: 2mm; margin-top: 1mm; }
+      .year-input { flex-basis: 22mm; width: 22mm !important; min-width: 22mm !important; }
+      .meta-grid { gap: 1.5mm 4mm; margin-top: 2.5mm; grid-template-columns: minmax(0, 1.55fr) minmax(55mm, .95fr); }
+      .meta-column { gap: 1.2mm; }
+      .field-row { grid-template-columns: 28mm 1fr; gap: 1.5mm; }
+      .field-row label { font-size: 7.5pt; }
+      .document-header input, .document-header select { padding: .8mm 1.3mm; min-height: 4.6mm; font-size: 7.4pt; }
+      .time-fields { gap: 1mm; font-size: 7.2pt; grid-template-columns: auto 1fr auto 1fr; }
+      .table-wrap { margin: 0; overflow: visible; border-width: .35mm; }
+      table { width: 100%; min-width: 0; font-size: 6.6pt; table-layout: fixed; }
+      thead { display: table-header-group; }
+      tfoot { display: table-row-group; }
+      tr { break-inside: avoid; page-break-inside: avoid; }
+      th, td { border-width: .25mm; }
+      thead th { padding: 1.1mm .45mm; font-size: 6.3pt; }
+      .cell-input, .day-select { min-height: 4.1mm; padding: .35mm .45mm; font-size: 6.4pt; }
+      .student-name { padding-left: 1mm; }
+      .day-kind { font-size: 6.1pt; padding: .3mm; }
+      .day-select { appearance: none; -webkit-appearance: none; }
+      .money-input { padding-right: .8mm; }
+      tfoot td { padding: 1.3mm 1mm; }
+      .total-label { font-size: 10.5pt; }
+      .document-footer { padding: 1.5mm 0 0; }
+      .note, .footer-row { font-size: 6.5pt; }
+      .footer-row { margin-top: 4mm; }
+
+      body.print-portrait .col-no { width: 6mm; }
+      body.print-portrait .col-name { width: 39mm; }
+      body.print-portrait .col-kind { width: 18mm; }
+      body.print-portrait .col-day { width: 4.8mm; }
+      body.print-portrait .col-money { width: 19mm; }
+
+      body.print-landscape .document-title { font-size: 15pt; }
+      body.print-landscape .meta-grid { grid-template-columns: minmax(0, 1.6fr) minmax(70mm, .85fr); }
+      body.print-landscape table { font-size: 7.2pt; }
+      body.print-landscape thead th { font-size: 7pt; }
+      body.print-landscape .cell-input,
+      body.print-landscape .day-select { font-size: 7pt; min-height: 4.5mm; }
+      body.print-landscape .col-no { width: 7mm; }
+      body.print-landscape .col-name { width: 54mm; }
+      body.print-landscape .col-kind { width: 23mm; }
+      body.print-landscape .col-day { width: 8mm; }
+      body.print-landscape .col-money { width: 24mm; }
+    }
+
+    /* ===================== Auth / platform chrome ===================== */
+    .standard-checkbox-group{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;}
+    .standard-checkbox-group label{display:flex;align-items:center;gap:3px;font-size:12.5px;font-weight:normal;cursor:pointer;}
+    .standard-checkbox-group input{width:auto;margin:0;}
+    #authOverlay{
+      position:fixed;inset:0;background:#eef1f5;z-index:2000;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .auth-box{background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.15);padding:32px;width:360px;max-width:90vw;}
+    .auth-box h2{margin:0 0 4px;color:var(--navy-800);font-size:20px;}
+    .auth-box .auth-sub{color:var(--muted);font-size:12.5px;margin-bottom:18px;}
+    .auth-box input{width:100%;padding:9px 10px;margin-bottom:10px;border:1px solid var(--line);border-radius:6px;font-size:13.5px;box-sizing:border-box;}
+    .auth-box button.auth-submit{width:100%;padding:10px;border:none;border-radius:6px;background:var(--navy-800);color:#fff;font-weight:700;font-size:14px;cursor:pointer;margin-top:4px;}
+    .auth-toggle{text-align:center;margin-top:14px;font-size:12.5px;color:var(--muted);}
+    .auth-toggle a{color:var(--navy-800);cursor:pointer;font-weight:600;text-decoration:none;}
+    .auth-error{color:#c0392b;font-size:12px;margin-bottom:8px;min-height:16px;}
+    .pw-wrap{position:relative;}
+    .pw-wrap input{padding-right:36px !important;}
+    .pw-toggle{
+      position:absolute;right:10px;top:50%;transform:translateY(-50%);
+      cursor:pointer;font-size:15px;color:var(--muted);user-select:none;
+      background:none;border:none;padding:0;
+    }
+    .auth-forgot{text-align:right;font-size:11.5px;margin:-4px 0 10px;}
+    .auth-forgot a{color:var(--navy-800);cursor:pointer;text-decoration:none;}
+    #topUserBar{display:none;align-items:center;gap:10px;background:#eef1f5;padding:6px 14px;font-size:12px;color:var(--muted);max-width:1760px;margin:0 auto 10px;border-radius:6px;}
+    #topUserBar button{font-size:11px;padding:3px 9px;border-radius:5px;border:1px solid var(--line);background:#fff;cursor:pointer;}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:3000;}
+    .modal-box{background:#fff;border-radius:10px;padding:20px;width:520px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;}
+    .modal-box h3{margin:0;color:var(--navy-800);}
+    .modal-close{cursor:pointer;font-weight:700;color:#6b7280;font-size:18px;line-height:1;}
+    .manage-tab-btn{padding:6px 14px;border:1px solid var(--navy-800);border-radius:6px;background:#fff;color:var(--navy-800);font-size:12px;font-weight:600;cursor:pointer;}
+    .manage-tab-btn.active,.manage-tab-btn:hover{background:var(--navy-800);color:#fff;}
+    .manage-add-row{display:flex;gap:6px;margin-bottom:12px;}
+    .manage-add-row input{flex:1;padding:7px 9px;border:1px solid var(--line);border-radius:6px;font-size:13px;}
+    .manage-add-row button{padding:7px 14px;border-radius:6px;border:none;background:var(--navy-800);color:#fff;font-weight:600;cursor:pointer;font-size:12.5px;}
+    .manage-list-item{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid #eee;font-size:13px;}
+    .manage-list-item:last-child{border-bottom:none;}
+    .manage-delete-btn{border:none;background:none;color:#c0392b;cursor:pointer;font-size:16px;font-weight:700;padding:0 4px;}
+    .manage-delete-btn:hover{color:#96281b;}
+    .manage-empty{color:#888;font-size:13px;padding:10px;}
+    .pic-screen-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+    .pic-screen-header h2{margin:0;color:var(--navy-800);}
+    .pic-filters{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;background:#f4f8fc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:14px;}
+    .pic-filters label{display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--muted);}
+    .pic-filters select, .pic-filters input{padding:6px 8px;font-size:13px;border:1px solid var(--line);border-radius:5px;min-width:130px;}
+    .pic-filters button{padding:7px 14px;border-radius:6px;border:1px solid var(--navy-800);background:var(--navy-800);color:#fff;font-weight:600;font-size:12.5px;cursor:pointer;}
+    #btnBackToForm, #btnBackToFormFromReports, #btnRefreshReview, #btnClearReport{background:#fff;color:var(--navy-800);}
+    .pic-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;background:#fff;}
+    .pic-row-info{font-size:13px;}
+    .pic-row-info .name{font-weight:700;color:var(--navy-800);}
+    .pic-row-info .meta{color:var(--muted);font-size:12px;}
+    .pic-row-actions{display:flex;gap:8px;}
+    .pic-row-actions button, .pic-row-actions a{
+      padding:6px 14px;border-radius:6px;border:1px solid var(--navy-800);background:#fff;color:var(--navy-800);
+      font-weight:600;font-size:12.5px;cursor:pointer;text-decoration:none;
+    }
+    .pic-row-actions .done-btn{background:#2e8b57;border-color:#2e8b57;color:#fff;}
+    .report-summary-card{display:flex;gap:24px;flex-wrap:wrap;background:#fff8e1;border:1px solid #e6d28a;border-radius:8px;padding:14px 18px;margin-bottom:14px;font-size:13px;}
+    .report-summary-card b{display:block;font-size:18px;color:var(--navy-800);}
+  </style>
+</head>
+<body class="print-portrait">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div id="authOverlay">
+  <div class="auth-box" id="authBoxScriptError" style="display:none;text-align:center;">
+    <h2 style="color:#c0392b;">Connection Problem</h2>
+    <div class="auth-sub">
+      This page couldn't load a required script (likely blocked by your network,
+      an ad-blocker, or a connectivity issue). Please check your internet connection
+      and refresh the page. If this keeps happening, contact your admin.
+    </div>
+  </div>
+  <div class="auth-box" id="authBoxLogin">
+    <h2>MEG-FORMS Login</h2>
+    <div class="auth-sub">Sign in to access the Monthly Tuition / Enrichment Class Payment form (MEG-TEC)</div>
+    <div class="auth-error" id="loginError"></div>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <div class="pw-wrap">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button type="button" class="pw-toggle" onclick="togglePwVisibility('loginPassword', this)">👁</button>
+    </div>
+    <div class="auth-forgot"><a onclick="showAuthBox('forgot')">Forgot password?</a></div>
+    <button class="auth-submit" onclick="doSignIn()">Sign In</button>
+    <div class="auth-toggle">No account yet? <a onclick="showAuthBox('signup')">Sign up</a></div>
+  </div>
+  <div class="auth-box" id="authBoxSignup" style="display:none;">
+    <h2>Create Account</h2>
+    <div class="auth-sub">Sign up, then wait for admin approval to access the form</div>
+    <div class="auth-error" id="signupError"></div>
+    <input type="text" id="signupName" placeholder="Full Name">
+    <input type="email" id="signupEmail" placeholder="Email">
+    <div class="pw-wrap">
+      <input type="password" id="signupPassword" placeholder="Password (min 6 characters)">
+      <button type="button" class="pw-toggle" onclick="togglePwVisibility('signupPassword', this)">👁</button>
+    </div>
+    <button class="auth-submit" onclick="doSignUp()">Sign Up</button>
+    <div class="auth-toggle">Already have an account? <a onclick="showAuthBox('login')">Sign in</a></div>
+  </div>
+  <div class="auth-box" id="authBoxPending" style="display:none;text-align:center;">
+    <h2>Pending Approval</h2>
+    <div class="auth-sub">Your account is created. An admin needs to grant you access to MEG-TEC before you can continue.</div>
+    <button class="auth-submit" onclick="doSignOut()" style="background:#6b7280;">Sign Out</button>
+  </div>
+  <div class="auth-box" id="authBoxForgot" style="display:none;">
+    <h2>Reset Password</h2>
+    <div class="auth-sub">Enter your email and we'll send you a reset link.</div>
+    <div class="auth-error" id="forgotError"></div>
+    <input type="email" id="forgotEmail" placeholder="Email">
+    <button class="auth-submit" onclick="doForgotPassword()">Send Reset Link</button>
+    <div class="auth-toggle"><a onclick="showAuthBox('login')">Back to Sign In</a></div>
+  </div>
+  <div class="auth-box" id="authBoxNewPassword" style="display:none;">
+    <h2>Set New Password</h2>
+    <div class="auth-sub">Choose a new password for your account.</div>
+    <div class="auth-error" id="newPasswordError"></div>
+    <div class="pw-wrap">
+      <input type="password" id="newPasswordInput" placeholder="New password (min 6 characters)">
+      <button type="button" class="pw-toggle" onclick="togglePwVisibility('newPasswordInput', this)">👁</button>
+    </div>
+    <button class="auth-submit" onclick="doSetNewPassword()">Set Password</button>
+  </div>
+</div>
+
+<div id="topUserBar" class="no-print">
+  <span id="topUserLabel"></span>
+  <button onclick="doSignOut()">Sign Out</button>
+</div>
+
+<div class="modal-overlay no-print" id="manageListsModal">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <h3>📋 Manage Lists</h3>
+      <span class="modal-close" onclick="closeManageModal()">✕</span>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;">
+      <button class="manage-tab-btn active" onclick="showManageTab('courses')">📚 Courses</button>
+      <button class="manage-tab-btn" onclick="showManageTab('standards')">🏫 Standards</button>
+      <button class="manage-tab-btn" onclick="showManageTab('users')">👥 Users</button>
+    </div>
+    <div id="manageListContent" style="overflow-y:auto;flex:1;"></div>
+  </div>
+</div>
+
+  <main class="app-shell" id="mainFormArea">
+    <section class="toolbar" aria-label="Form actions">
+      <div class="toolbar__title">
+        <strong>MYEDEN Digital Payment Form</strong>
+        <span>Version <span id="toolbarVersion">MEG-TEC v2026.08.03-00:00</span> · Browser-based storage for GitHub Pages</span>
+      </div>
+      <label class="toolbar__field" for="printOrientation">
+        Print Layout
+        <select id="printOrientation">
+          <option value="portrait" selected>Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
+      </label>
+      <button class="btn" type="button" id="saveBtn">Save</button>
+      <button class="btn" type="button" id="downloadBtn">Download JSON</button>
+      <button class="btn" type="button" id="importBtn">Import JSON</button>
+      <button class="btn" type="button" id="csvBtn">Export CSV</button>
+      <button class="btn btn--primary" type="button" id="printBtn">Print / PDF</button>
+      <button class="btn btn--danger" type="button" id="resetBtn">Reset</button>
+      <button class="btn btn--primary" type="button" id="submitBtn" style="display:none;">✅ Submit to PIC</button>
+      <button class="btn" type="button" id="btnManageLists" style="display:none;">📋 Manage Lists</button>
+      <button class="btn" type="button" id="btnPicReview" style="display:none;">🔍 Review Submissions</button>
+      <button class="btn" type="button" id="btnPicReports" style="display:none;">📊 Reports</button>
+      <input class="file-input" id="importFile" type="file" accept="application/json,.json" />
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </section>
+
+    <article class="paper" id="paymentForm">
+      <header class="document-header">
+        <div class="field-row" style="margin-bottom:6px;">
+          <label for="companySelect">Company :</label>
+          <select id="companySelect" aria-label="Company">
+            <option value="MEG">MyEden Group Sdn Bhd</option>
+            <option value="MEH">MyEden Edu Hub</option>
+          </select>
+        </div>
+        <div class="document-title">
+          <div>MONTHLY TUITION / ENRICHMENT CLASS PAYMENT</div>
+          <div class="year-line">
+            <span>FOR THE YEAR</span>
+            <input class="year-input" id="year" type="number" min="2000" max="2100" inputmode="numeric" aria-label="Year" />
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta-column">
+            <div class="field-row">
+              <label for="teacherName">Teacher's Name :</label>
+              <input id="teacherName" type="text" autocomplete="name" placeholder="Teacher's name" />
+            </div>
+            <div class="field-row">
+              <label for="course">Course :</label>
+              <select id="course" aria-label="Course">
+                <option value="">-- Select Course --</option>
+                <option value="BM">Bahasa Melayu (BM)</option>
+                <option value="EN">English (EN)</option>
+                <option value="MT">Mathematic (MT)</option>
+                <option value="SC">Science (SC)</option>
+                <option value="TK">Taekwondo (TK)</option>
+                <option value="CC">Chinese Chess (CC)</option>
+                <option value="AC">Art Class (AC)</option>
+                <option value="DC">Dance Class (DC)</option>
+                <option value="AMA">AMA</option>
+              </select>
+            </div>
+            <div class="field-row">
+              <label>Time Duration :</label>
+              <div class="time-fields">
+                <span>From</span><input id="timeFrom" type="time" aria-label="Start time" />
+                <span>To</span><input id="timeTo" type="time" aria-label="End time" />
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-column">
+            <div class="field-row">
+              <label for="serialNo">Serial No :</label>
+              <input id="serialNo" type="text" readonly aria-label="Automatically generated serial number" />
+            </div>
+            <div class="field-row">
+              <label for="paymentMode">Payment Mode :</label>
+              <select id="paymentMode">
+                <option>Fixed Monthly</option>
+                <option>Per Lesson</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field-row">
+              <label for="standardCheckboxes">Standard :</label>
+              <div id="standardCheckboxes" class="standard-checkbox-group" role="group" aria-label="Standard (select one or more)"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="schedule-bar">
+        <label class="same-date-control" for="sameDates">
+          <input id="sameDates" type="checkbox" />
+          Use the same Actual Day and Replacement Day dates for all students
+        </label>
+        <label class="same-date-control" for="sameFees">
+          <input id="sameFees" type="checkbox" />
+          Use the same Monthly Fee and Venue Fee for all students
+        </label>
+        <span class="weekend-key"><span class="weekend-swatch" aria-hidden="true"></span>Saturday and Sunday dates are highlighted</span>
+        <button class="btn btn--secondary" type="button" id="loadPrevMonthBtn" style="display:none;">↺ Load Previous Month's Template</button>
+      </div>
+
+      <div class="table-wrap">
+        <table aria-label="Monthly tuition payment details">
+          <colgroup>
+            <col class="col-no" />
+            <col class="col-name" />
+            <col class="col-kind" />
+            <col class="col-day" span="10" />
+            <col class="col-money" />
+            <col class="col-money" />
+            <col class="col-money" />
+            <col class="col-action" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th rowspan="2">No.</th>
+              <th rowspan="2">Student's Name</th>
+              <th rowspan="2">Month Of</th>
+              <th class="month-header" colspan="10">
+                <select id="month" aria-label="Month">
+                  <option value="JANUARY">JANUARY</option>
+                  <option value="FEBRUARY">FEBRUARY</option>
+                  <option value="MARCH">MARCH</option>
+                  <option value="APRIL">APRIL</option>
+                  <option value="MAY">MAY</option>
+                  <option value="JUNE">JUNE</option>
+                  <option value="JULY">JULY</option>
+                  <option value="AUGUST">AUGUST</option>
+                  <option value="SEPTEMBER">SEPTEMBER</option>
+                  <option value="OCTOBER">OCTOBER</option>
+                  <option value="NOVEMBER">NOVEMBER</option>
+                  <option value="DECEMBER">DECEMBER</option>
+                </select>
+              </th>
+              <th rowspan="2">Monthly<br />Fee</th>
+              <th rowspan="2">Venue Fee /<br />Head Count</th>
+              <th rowspan="2">Net Pay</th>
+              <th rowspan="2" class="col-action">Action</th>
+            </tr>
+            <tr id="slotHeaders"></tr>
+          </thead>
+          <tbody id="studentRows"></tbody>
+          <tbody class="add-student-table-body">
+            <tr class="add-student-table-row">
+              <td colspan="17">
+                <button class="btn btn--primary add-student-table-btn" type="button" id="addStudentTableBtn">+ Add Student</button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="13" class="total-label">Total</td>
+              <td id="totalFee" class="total-number">0.00</td>
+              <td id="totalVenue" class="total-number">0.00</td>
+              <td id="totalNet" class="total-number">0.00</td>
+              <td class="col-action"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <section class="settings-panel" aria-label="Calculation settings">
+        <label>
+          Default Monthly Fee (RM)
+          <input id="defaultMonthlyFee" type="number" step="0.01" value="90.00" />
+        </label>
+        <label>
+          Venue / Head Count (%)
+          <input id="venueRate" type="number" min="0" max="100" step="0.01" value="5.00" />
+        </label>
+      </section>
+
+      <div class="privacy-note">
+        GitHub Pages is a public static website. Student information entered here is stored in this browser only unless a JSON or CSV file is exported.
+      </div>
+
+      <footer class="document-footer">
+        <p class="note">** Please complete all required data, select “Print / PDF” and save the file, then forward the completed form to MyEden.</p>
+        <div class="footer-row">
+          <div class="footer-meta">
+            <span>MYEDEN Digital Payment Form · <strong id="versionPreview">MEG-TEC v2026.08.03-00:00</strong></span>
+            <span class="generated-stamp">Timestamp: <strong id="generatedTimestamp">—</strong></span>
+          </div>
+          <span>Ref: <strong>MEG-FRM-OR-001 v1.0</strong></span>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <section class="app-shell no-print" id="picReviewScreen" style="display:none;">
+    <div class="pic-screen-header">
+      <h2>🔍 Review Submissions</h2>
+      <button class="btn" type="button" id="btnBackToForm">← Back to Form</button>
+    </div>
+    <div class="pic-filters">
+      <label>Status
+        <select id="reviewStatusFilter">
+          <option value="submitted">Pending Review</option>
+          <option value="done">Done</option>
+          <option value="">All</option>
+        </select>
+      </label>
+      <button class="btn" type="button" id="btnRefreshReview">↻ Refresh</button>
+    </div>
+    <div id="picReviewList"></div>
+  </section>
+
+  <section class="app-shell no-print" id="picReportsScreen" style="display:none;">
+    <div class="pic-screen-header">
+      <h2>📊 Reports</h2>
+      <button class="btn" type="button" id="btnBackToFormFromReports">← Back to Form</button>
+    </div>
+    <div class="pic-filters">
+      <label>Teacher <input type="text" id="reportTeacherFilter" placeholder="Teacher name"></label>
+      <label>Course <select id="reportCourseFilter"><option value="">All courses</option></select></label>
+      <label>Standard <select id="reportStandardFilter"><option value="">All standards</option></select></label>
+      <label>Month <select id="reportMonthFilter"><option value="">All months</option></select></label>
+      <label>Year <input type="number" id="reportYearFilter" placeholder="e.g. 2026"></label>
+      <button class="btn" type="button" id="btnRunReport">Run Report</button>
+      <button class="btn" type="button" id="btnClearReport">Clear</button>
+    </div>
+    <div id="reportSummary"></div>
+    <div id="reportList"></div>
+  </section>
+
+  <template id="studentRowTemplate">
+    <tr data-row="actual">
+      <td rowspan="2" class="number-cell"></td>
+      <td rowspan="2"><input class="cell-input student-name" type="text" aria-label="Student name" placeholder="Enter student name (level)" /></td>
+      <td class="day-kind">Actual Day</td>
+      <td class="day-cells-anchor" hidden></td>
+      <td rowspan="2"><input class="cell-input money-input monthly-fee" type="number" step="0.01" aria-label="Monthly fee" /></td>
+      <td rowspan="2"><input class="cell-input money-input venue-fee" type="number" step="0.01" aria-label="Venue fee" /></td>
+      <td rowspan="2"><input class="cell-input money-input net-pay" type="number" step="0.01" aria-label="Net pay" readonly /></td>
+      <td rowspan="2" class="action-cell"><button type="button" class="btn btn--small btn--danger remove-row" aria-label="Remove student">×</button></td>
+    </tr>
+    <tr data-row="replacement">
+      <td class="day-kind">Replacement Day</td>
+      <td class="day-cells-anchor" hidden></td>
+    </tr>
+  </template>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const VERSION = "MEG-TEC v2026.08.03-00:00";
+      const DOCUMENT_REFERENCE = "MEG-FRM-OR-001 v1.0";
+      const SLOT_COUNT = 10;
+      const STORAGE_BASE = "myeden-monthly-tuition-v2026.07.24";
+      const GLOBAL_KEY = `${STORAGE_BASE}:global`;
+      const ROSTER_KEY = `${STORAGE_BASE}:rosters`;
+      const OLD_STORAGE_KEY = "myeden-monthly-tuition-form-v1";
+      const MONTHS = [
+        "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+        "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+      ];
+      const COURSES = {
+        BM: "Bahasa Melayu",
+        EN: "English",
+        MT: "Mathematic",
+        SC: "Science",
+        TK: "Taekwondo",
+        CC: "Chinese Chess",
+        AC: "Art Class",
+        DC: "Dance Class",
+        AMA: "AMA"
+      };
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+      const rowsBody = $("#studentRows");
+      const statusEl = $("#status");
+      let currentContext = null;
+      let applyingData = false;
+      let titleBeforePrint = document.title;
+
+      const globalFieldIds = [
+        "teacherName", "timeFrom", "timeTo", "paymentMode",
+        "defaultMonthlyFee", "venueRate", "printOrientation"
+      ];
+
+      const money = (value) => {
+        const n = Number.parseFloat(value);
+        return Number.isFinite(n) ? n : 0;
+      };
+
+      const displayMoney = (value) => money(value).toFixed(2);
+      const pad2 = (value) => String(value).padStart(2, "0");
+
+      function flash(message, isError = false) {
+        statusEl.textContent = message;
+        statusEl.style.color = isError ? "#ffb4b4" : "#9ff0c9";
+        window.clearTimeout(flash.timer);
+        flash.timer = window.setTimeout(() => { statusEl.textContent = ""; }, 3500);
+      }
+
+      function createId() {
+        return globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+
+      function getContextFromUi() {
+        return {
+          course: $("#course").value || "",
+          year: String($("#year").value || new Date().getFullYear()),
+          month: $("#month").value || MONTHS[new Date().getMonth()]
+        };
+      }
+
+      function formStorageKey(context) {
+        const code = context.course || "UNSELECTED";
+        return `${STORAGE_BASE}:form:${code}:${context.year}:${context.month}`;
+      }
+
+      function daysInSelectedMonth() {
+        const year = Number.parseInt($("#year").value, 10) || new Date().getFullYear();
+        const monthIndex = Math.max(0, MONTHS.indexOf($("#month").value));
+        return new Date(year, monthIndex + 1, 0).getDate();
+      }
+
+      function isWeekend(dayValue) {
+        const day = Number.parseInt(dayValue, 10);
+        if (!day) return false;
+        const year = Number.parseInt($("#year").value, 10) || new Date().getFullYear();
+        const monthIndex = Math.max(0, MONTHS.indexOf($("#month").value));
+        const weekday = new Date(year, monthIndex, day).getDay();
+        return weekday === 0 || weekday === 6;
+      }
+
+      function updateWeekendClass(select) {
+        const cell = select.closest("td");
+        if (cell) cell.classList.toggle("weekend", isWeekend(select.value));
+      }
+
+      function buildDayOptions(select, selectedValue = "") {
+        const maxDay = daysInSelectedMonth();
+        const previous = String(selectedValue || select.value || "");
+        select.replaceChildren(new Option("", ""));
+        for (let day = 1; day <= maxDay; day += 1) {
+          select.add(new Option(String(day), String(day)));
+        }
+        select.value = Number(previous) <= maxDay ? previous : "";
+        updateWeekendClass(select);
+      }
+
+      function refreshAllDayOptions(showInvalidMessage = false) {
+        let cleared = 0;
+        $$(".day-select", rowsBody).forEach(select => {
+          const oldValue = select.value;
+          buildDayOptions(select, oldValue);
+          if (oldValue && !select.value) cleared += 1;
+        });
+        if (cleared && showInvalidMessage) {
+          flash(`${cleared} date field${cleared === 1 ? " was" : "s were"} cleared because the selected month has fewer days.`, true);
+        }
+      }
+
+      function createDayCell(kind, slotIndex, value = "") {
+        const td = document.createElement("td");
+        const select = document.createElement("select");
+        select.className = `day-select ${kind}-day`;
+        select.dataset.slot = String(slotIndex);
+        select.setAttribute("aria-label", `${kind === "actual" ? "Actual" : "Replacement"} day ${slotIndex + 1}`);
+        buildDayOptions(select, value);
+        td.append(select);
+        return td;
+      }
+
+      function insertDayCells(row, kind, values = []) {
+        const anchor = $(".day-cells-anchor", row);
+        for (let index = 0; index < SLOT_COUNT; index += 1) {
+          row.insertBefore(createDayCell(kind, index, values[index] || ""), anchor);
+        }
+        anchor.remove();
+      }
+
+      function getActualRows() {
+        return $$("tr[data-row='actual']", rowsBody);
+      }
+
+      function getReplacementRow(actualRow) {
+        const row = actualRow.nextElementSibling;
+        return row?.matches("tr[data-row='replacement']") ? row : null;
+      }
+
+      function isNamedRow(actualRow) {
+        return Boolean($(".student-name", actualRow)?.value.trim());
+      }
+
+      function getSharedSourceRow() {
+        return getActualRows().find(isNamedRow) || null;
+      }
+
+      function getSharedDates() {
+        const source = getSharedSourceRow();
+        if (!source) return { source: null, actualDays: [], replacementDays: [] };
+        const replacement = getReplacementRow(source);
+        return {
+          source,
+          actualDays: $$(".actual-day", source).map(input => input.value),
+          replacementDays: replacement ? $$(".replacement-day", replacement).map(input => input.value) : []
+        };
+      }
+
+      function copySharedDatesToRow(actualRow, shared = getSharedDates()) {
+        if (!actualRow || !isNamedRow(actualRow) || !shared.source || actualRow === shared.source) return;
+        if (actualRow.dataset.datesLocked === "1") return; // user has manually edited this row's dates — leave it alone
+        const replacement = getReplacementRow(actualRow);
+        $$(".actual-day", actualRow).forEach((input, index) => {
+          input.value = shared.actualDays[index] || "";
+          updateWeekendClass(input);
+        });
+        if (replacement) {
+          $$(".replacement-day", replacement).forEach((input, index) => {
+            input.value = shared.replacementDays[index] || "";
+            updateWeekendClass(input);
+          });
+        }
+      }
+
+      function applySharedDatesToAll() {
+        const shared = getSharedDates();
+        if (!shared.source) return;
+        getActualRows().filter(isNamedRow).forEach(actualRow => copySharedDatesToRow(actualRow, shared));
+      }
+
+      // Fee-sync mirrors the dates-sync mechanism above: earliest-named row with
+      // a Monthly Fee entered becomes the source, propagates to other named rows,
+      // and a row's own manual fee edit locks it out of further auto-overwrites.
+      function getSharedFeesSourceRow() {
+        return getActualRows().find(row => isNamedRow(row) && $(".monthly-fee", row).value !== "") || null;
+      }
+
+      function getSharedFees() {
+        const source = getSharedFeesSourceRow();
+        if (!source) return { source: null, monthlyFee: "", venueFee: "" };
+        return {
+          source,
+          monthlyFee: $(".monthly-fee", source).value,
+          venueFee: $(".venue-fee", source).value
+        };
+      }
+
+      function copySharedFeesToRow(actualRow, shared = getSharedFees()) {
+        if (!actualRow || !isNamedRow(actualRow) || !shared.source || actualRow === shared.source) return;
+        if (actualRow.dataset.feesLocked === "1") return; // user has manually edited this row's fees — leave it alone
+        $(".monthly-fee", actualRow).value = shared.monthlyFee;
+        $(".venue-fee", actualRow).value = shared.venueFee;
+        recalcRow(actualRow);
+      }
+
+      function applySharedFeesToAll() {
+        const shared = getSharedFees();
+        if (!shared.source) return;
+        getActualRows().filter(isNamedRow).forEach(actualRow => copySharedFeesToRow(actualRow, shared));
+      }
+
+      function handleFeeEdited(actualRow) {
+        if (!$("#sameFees").checked) return;
+        const shared = getSharedFees();
+        if (shared.source === actualRow) {
+          applySharedFeesToAll();
+        } else if (shared.source) {
+          actualRow.dataset.feesLocked = "1";
+        }
+      }
+
+      function propagateFirstRowDate(sourceSelect) {
+        if (!$("#sameDates").checked) return;
+        const shared = getSharedDates();
+        if (!shared.source) return;
+        const sourceActual = sourceSelect.closest("tr[data-row='actual']");
+        const sourceReplacement = sourceSelect.closest("tr[data-row='replacement']");
+        const sourceReplacementRow = getReplacementRow(shared.source);
+        const isSource = sourceActual === shared.source || sourceReplacement === sourceReplacementRow;
+        if (!isSource) return;
+        const kindClass = sourceSelect.classList.contains("actual-day") ? ".actual-day" : ".replacement-day";
+        const slot = Number(sourceSelect.dataset.slot);
+        getActualRows().filter(row => row !== shared.source && isNamedRow(row)).forEach(actualRow => {
+          if (actualRow.dataset.datesLocked === "1") return; // user edited this row's dates directly — leave it alone
+          const targetRoot = kindClass === ".actual-day" ? actualRow : getReplacementRow(actualRow);
+          const target = targetRoot ? $$(kindClass, targetRoot)[slot] : null;
+          if (target) {
+            target.value = sourceSelect.value;
+            updateWeekendClass(target);
+          }
+        });
+      }
+
+      function makeStudentRow(data = {}, options = {}) {
+        const fragment = $("#studentRowTemplate").content.cloneNode(true);
+        const actualRow = $("tr[data-row='actual']", fragment);
+        const replacementRow = $("tr[data-row='replacement']", fragment);
+        const studentId = createId();
+        actualRow.dataset.studentId = studentId;
+        replacementRow.dataset.studentId = studentId;
+
+        const nameValue = String(data.name || "").trim();
+        const shouldUseShared = Boolean(options.useShared && nameValue);
+        const shared = shouldUseShared ? getSharedDates() : null;
+        const actualDays = data.actualDays || (shared?.source ? shared.actualDays : []);
+        const replacementDays = data.replacementDays || (shared?.source ? shared.replacementDays : []);
+        insertDayCells(actualRow, "actual", actualDays);
+        insertDayCells(replacementRow, "replacement", replacementDays);
+
+        const nameInput = $(".student-name", actualRow);
+        nameInput.value = nameValue;
+
+        const hasName = Boolean(nameValue);
+        const hasMonthlyValue = data.monthlyFee !== undefined && data.monthlyFee !== null && data.monthlyFee !== "";
+        const monthlyFee = hasMonthlyValue ? data.monthlyFee : (hasName ? $("#defaultMonthlyFee").value : "");
+        $(".monthly-fee", actualRow).value = monthlyFee === "" ? "" : displayMoney(monthlyFee);
+
+        const defaultVenue = monthlyFee === "" ? "" : (money(monthlyFee) < 0 ? 0 : money(monthlyFee) * money($("#venueRate").value) / 100);
+        const hasVenueValue = data.venueFee !== undefined && data.venueFee !== null && data.venueFee !== "";
+        const venueFee = hasVenueValue ? data.venueFee : defaultVenue;
+        $(".venue-fee", actualRow).value = venueFee === "" ? "" : displayMoney(venueFee);
+
+        const hasNetValue = data.netPay !== undefined && data.netPay !== null && data.netPay !== "";
+        const netPay = hasNetValue ? data.netPay : (monthlyFee === "" ? "" : money(monthlyFee) - money(venueFee));
+        $(".net-pay", actualRow).value = netPay === "" ? "" : displayMoney(netPay);
+
+        let wasNamed = hasName;
+        nameInput.addEventListener("input", () => {
+          const nowNamed = Boolean(nameInput.value.trim());
+          if (nowNamed && !wasNamed) {
+            if ($(".monthly-fee", actualRow).value === "") {
+              const monthly = money($("#defaultMonthlyFee").value);
+              $(".monthly-fee", actualRow).value = displayMoney(monthly);
+              const venue = monthly < 0 ? 0 : monthly * money($("#venueRate").value) / 100;
+              $(".venue-fee", actualRow).value = displayMoney(venue);
+              $(".net-pay", actualRow).value = displayMoney(monthly - venue);
+            }
+            if ($("#sameDates").checked) {
+              const sharedDates = getSharedDates();
+              if (sharedDates.source === actualRow) applySharedDatesToAll();
+              else copySharedDatesToRow(actualRow, sharedDates);
+            }
+            if ($("#sameFees").checked) {
+              const sharedFees = getSharedFees();
+              if (sharedFees.source === actualRow) applySharedFeesToAll();
+              else copySharedFeesToRow(actualRow, sharedFees);
+            }
+          }
+          wasNamed = nowNamed;
+          recalcTotals();
+          scheduleSave();
+        });
+
+        $(".monthly-fee", actualRow).addEventListener("input", () => {
+          const raw = $(".monthly-fee", actualRow).value;
+          if (raw === "") {
+            $(".venue-fee", actualRow).value = "";
+            $(".net-pay", actualRow).value = "";
+            recalcTotals();
+            scheduleSave();
+            return;
+          }
+          const monthly = money(raw);
+          const rate = money($("#venueRate").value) / 100;
+          $(".venue-fee", actualRow).value = displayMoney(monthly < 0 ? 0 : monthly * rate);
+          recalcRow(actualRow);
+          handleFeeEdited(actualRow);
+        });
+
+        $(".venue-fee", actualRow).addEventListener("input", () => {
+          recalcRow(actualRow);
+          handleFeeEdited(actualRow);
+        });
+
+        $(".remove-row", actualRow).addEventListener("click", () => {
+          if (getActualRows().length <= 1) {
+            nameInput.value = "";
+            $$(".day-select", actualRow).concat($$(".day-select", replacementRow)).forEach(select => {
+              select.value = "";
+              updateWeekendClass(select);
+            });
+            $(".monthly-fee", actualRow).value = "";
+            $(".venue-fee", actualRow).value = "";
+            $(".net-pay", actualRow).value = "";
+            wasNamed = false;
+            delete actualRow.dataset.datesLocked;
+            delete actualRow.dataset.feesLocked;
+          } else {
+            replacementRow.remove();
+            actualRow.remove();
+          }
+          renumberRows();
+          recalcTotals();
+          scheduleSave();
+        });
+
+        $$(".day-select", actualRow).concat($$(".day-select", replacementRow)).forEach(select => {
+          select.addEventListener("change", () => {
+            updateWeekendClass(select);
+            if ($("#sameDates").checked) {
+              const shared = getSharedDates();
+              if (shared.source && shared.source !== actualRow) {
+                actualRow.dataset.datesLocked = "1"; // user edited this row's dates directly — stop auto-overwriting it
+              }
+            }
+            propagateFirstRowDate(select);
+            scheduleSave();
+          });
+        });
+
+        [...actualRow.querySelectorAll("input"), ...replacementRow.querySelectorAll("input")].forEach(input => {
+          if (input === nameInput) return;
+          input.addEventListener("input", () => {
+            recalcTotals();
+            scheduleSave();
+          });
+          input.addEventListener("change", scheduleSave);
+        });
+
+        rowsBody.append(fragment);
+        renumberRows();
+        recalcTotals();
+      }
+
+      function recalcRow(actualRow) {
+        const monthlyRaw = $(".monthly-fee", actualRow).value;
+        const venueRaw = $(".venue-fee", actualRow).value;
+        if (monthlyRaw === "" && venueRaw === "") $(".net-pay", actualRow).value = "";
+        else $(".net-pay", actualRow).value = displayMoney(money(monthlyRaw) - money(venueRaw));
+        recalcTotals();
+        scheduleSave();
+      }
+
+      function renumberRows() {
+        getActualRows().forEach((row, index) => {
+          $(".number-cell", row).textContent = index + 1;
+        });
+      }
+
+      function recalcTotals() {
+        let totalFee = 0;
+        let totalVenue = 0;
+        let totalNet = 0;
+        getActualRows().filter(isNamedRow).forEach(row => {
+          totalFee += money($(".monthly-fee", row).value);
+          totalVenue += money($(".venue-fee", row).value);
+          totalNet += money($(".net-pay", row).value);
+        });
+        $("#totalFee").textContent = displayMoney(totalFee);
+        $("#totalVenue").textContent = displayMoney(totalVenue);
+        $("#totalNet").textContent = displayMoney(totalNet);
+      }
+
+      function generateSerial(courseCode) {
+        if (!courseCode) return "";
+        const now = new Date();
+        return `${courseCode}-${pad2(now.getDate())}${pad2(now.getMonth() + 1)}${now.getFullYear()}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
+      }
+
+      function getFormData(contextOverride = null) {
+        const context = contextOverride || getContextFromUi();
+        const students = getActualRows().filter(isNamedRow).map(actualRow => {
+          const replacementRow = getReplacementRow(actualRow);
+          return {
+            name: $(".student-name", actualRow).value.trim(),
+            actualDays: $$(".actual-day", actualRow).map(input => input.value),
+            replacementDays: replacementRow ? $$(".replacement-day", replacementRow).map(input => input.value) : [],
+            monthlyFee: money($(".monthly-fee", actualRow).value),
+            venueFee: money($(".venue-fee", actualRow).value),
+            netPay: money($(".net-pay", actualRow).value)
+          };
+        });
+        return {
+          schemaVersion: 3,
+          appVersion: VERSION,
+          documentReference: DOCUMENT_REFERENCE,
+          savedAt: new Date().toISOString(),
+          generatedTimestamp: $("#generatedTimestamp").textContent || formatTimestamp(),
+          header: {
+            year: context.year,
+            teacherName: $("#teacherName").value,
+            course: context.course,
+            courseName: COURSES[context.course] || "",
+            timeFrom: $("#timeFrom").value,
+            timeTo: $("#timeTo").value,
+            serialNo: $("#serialNo").value,
+            paymentMode: $("#paymentMode").value,
+            standard: $$("#standardCheckboxes input:checked").map(cb => cb.value),
+            month: context.month,
+            sameDates: $("#sameDates").checked,
+            defaultMonthlyFee: $("#defaultMonthlyFee").value,
+            venueRate: $("#venueRate").value,
+            printOrientation: $("#printOrientation").value
+          },
+          students
+        };
+      }
+
+      function getRosters() {
+        try {
+          return JSON.parse(localStorage.getItem(ROSTER_KEY) || "{}");
+        } catch {
+          return {};
+        }
+      }
+
+      function saveRoster(courseCode) {
+        if (!courseCode) return;
+        const rosters = getRosters();
+        rosters[courseCode] = getActualRows()
+          .map(row => $(".student-name", row).value.trim())
+          .filter(Boolean);
+        localStorage.setItem(ROSTER_KEY, JSON.stringify(rosters));
+      }
+
+      function saveGlobalSettings() {
+        const data = Object.fromEntries(globalFieldIds.map(id => [id, $("#" + id).value]));
+        data.lastContext = getContextFromUi();
+        data.appVersion = VERSION;
+        localStorage.setItem(GLOBAL_KEY, JSON.stringify(data));
+      }
+
+      function saveCurrentForm(showMessage = false, contextOverride = null) {
+        if (applyingData) return;
+        updateActionTimestamp();
+        const context = contextOverride || currentContext || getContextFromUi();
+        localStorage.setItem(formStorageKey(context), JSON.stringify(getFormData(context)));
+        saveRoster(context.course);
+        saveGlobalSettings();
+        if (showMessage) {
+          const courseText = context.course ? `${COURSES[context.course]} (${context.course})` : "the unselected course";
+          flash(`Saved ${courseText} student list and ${context.month} ${context.year} form.`);
+        }
+      }
+
+      function scheduleSave() {
+        if (applyingData) return;
+        window.clearTimeout(scheduleSave.timer);
+        scheduleSave.timer = window.setTimeout(() => saveCurrentForm(false), 280);
+      }
+
+      function clearRows() {
+        rowsBody.replaceChildren();
+      }
+
+      function addRowsFromRoster(courseCode) {
+        const names = (getRosters()[courseCode] || []).filter(Boolean);
+        names.forEach(name => makeStudentRow({ name }));
+        makeStudentRow();
+      }
+
+      function applyFormData(data, context) {
+        if (!data || typeof data !== "object") throw new Error("Invalid form data.");
+        applyingData = true;
+        try {
+          const header = data.header || {};
+          $("#course").value = context.course || header.course || "";
+          $("#year").value = context.year || header.year || new Date().getFullYear();
+          $("#month").value = context.month || header.month || MONTHS[new Date().getMonth()];
+          ["teacherName", "timeFrom", "timeTo", "paymentMode", "standard", "defaultMonthlyFee", "venueRate", "printOrientation"].forEach(id => {
+            if (header[id] !== undefined && $("#" + id)) $("#" + id).value = header[id];
+          });
+          $("#serialNo").value = header.serialNo || generateSerial($("#course").value);
+          $("#sameDates").checked = Boolean(header.sameDates);
+          clearRows();
+          const students = (Array.isArray(data.students) ? data.students : []).filter(student => String(student?.name || "").trim());
+          if (students.length) {
+            students.forEach(student => makeStudentRow(student));
+            makeStudentRow();
+          } else addRowsFromRoster($("#course").value);
+          $("#generatedTimestamp").textContent = data.generatedTimestamp || formatTimestamp();
+          updatePrintOrientation();
+          refreshAllDayOptions();
+          recalcTotals();
+        } finally {
+          applyingData = false;
+        }
+      }
+
+      function loadContext(context, options = {}) {
+        applyingData = true;
+        try {
+          $("#course").value = context.course || "";
+          $("#year").value = context.year;
+          $("#month").value = context.month;
+          clearRows();
+          const saved = localStorage.getItem(formStorageKey(context));
+          if (saved) {
+            applyFormData(JSON.parse(saved), context);
+          } else {
+            $("#serialNo").value = generateSerial(context.course);
+            $("#sameDates").checked = false;
+            addRowsFromRoster(context.course);
+            refreshAllDayOptions();
+            recalcTotals();
+          }
+          currentContext = { ...context };
+          updatePrintOrientation();
+          saveGlobalSettings();
+          if (options.message) flash(options.message);
+        } catch (error) {
+          console.error(error);
+          clearRows();
+          $("#serialNo").value = generateSerial(context.course);
+          addRowsFromRoster(context.course);
+          currentContext = { ...context };
+          flash("The saved form could not be loaded. A new form was opened instead.", true);
+        } finally {
+          applyingData = false;
+        }
+      }
+
+      function handleContextChange() {
+        const nextContext = getContextFromUi();
+        if (currentContext) saveCurrentForm(false, currentContext);
+        loadContext(nextContext);
+      }
+
+      function loadGlobalSettings() {
+        try {
+          const data = JSON.parse(localStorage.getItem(GLOBAL_KEY) || "{}");
+          globalFieldIds.forEach(id => {
+            if (data[id] !== undefined && $("#" + id)) $("#" + id).value = data[id];
+          });
+          return data.lastContext || null;
+        } catch {
+          return null;
+        }
+      }
+
+      function formatTimestamp(date = new Date()) {
+        return `${pad2(date.getDate())}-${pad2(date.getMonth() + 1)}-${date.getFullYear()}-${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
+      }
+
+      function updateActionTimestamp() {
+        const stamp = formatTimestamp();
+        $("#generatedTimestamp").textContent = stamp;
+        return stamp;
+      }
+
+      function prepareRowsForOutput() {
+        let outputIndex = 0;
+        getActualRows().forEach(actualRow => {
+          const replacementRow = getReplacementRow(actualRow);
+          const named = isNamedRow(actualRow);
+          actualRow.classList.toggle("output-empty", !named);
+          replacementRow?.classList.toggle("output-empty", !named);
+          if (named) {
+            outputIndex += 1;
+            $(".number-cell", actualRow).textContent = outputIndex;
+          }
+        });
+      }
+
+      function restoreRowsAfterOutput() {
+        $$(".output-empty", rowsBody).forEach(row => row.classList.remove("output-empty"));
+        renumberRows();
+      }
+
+      function updatePrintOrientation() {
+        const orientation = $("#printOrientation").value === "landscape" ? "landscape" : "portrait";
+        document.body.classList.toggle("print-landscape", orientation === "landscape");
+        document.body.classList.toggle("print-portrait", orientation === "portrait");
+        $("#printPageStyle").textContent = `@page { size: A4 ${orientation}; margin: 6mm; }`;
+      }
+
+      function safeNamePart(value, fallback) {
+        const cleaned = String(value || "")
+          .trim()
+          .replace(/[^\p{L}\p{N}]+/gu, "-")
+          .replace(/^-+|-+$/g, "");
+        return cleaned || fallback;
+      }
+
+      function defaultFileName() {
+        const teacher = safeNamePart($("#teacherName").value, "Teacher");
+        const course = $("#course").value || "Course";
+        const month = $("#month").value || "Month";
+        const year = $("#year").value || "Year";
+        return `${teacher}-${course}-${month}${year}`;
+      }
+
+      function download(filename, content, type) {
+        const blob = new Blob([content], { type });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function exportCsv() {
+        updateActionTimestamp();
+        saveCurrentForm(false);
+        const data = getFormData();
+        const rows = [[
+          "No", "Student Name", "Month", "Actual Days", "Replacement Days",
+          "Monthly Fee", "Venue / Head Count", "Net Pay", "Teacher", "Course", "Year", "Serial No",
+          "Timestamp", "Document Reference"
+        ]];
+        data.students.forEach((student, index) => {
+          rows.push([
+            index + 1,
+            student.name,
+            data.header.month,
+            student.actualDays.filter(Boolean).join("; "),
+            student.replacementDays.filter(Boolean).join("; "),
+            displayMoney(student.monthlyFee),
+            displayMoney(student.venueFee),
+            displayMoney(student.netPay),
+            data.header.teacherName,
+            data.header.course,
+            data.header.year,
+            data.header.serialNo,
+            data.generatedTimestamp,
+            DOCUMENT_REFERENCE
+          ]);
+        });
+        rows.push(["", "TOTAL", "", "", "", $("#totalFee").textContent, $("#totalVenue").textContent, $("#totalNet").textContent, "", "", "", "", data.generatedTimestamp, DOCUMENT_REFERENCE]);
+        const csv = rows.map(row => row.map(value => `"${String(value ?? "").replaceAll('"', '""')}"`).join(",")).join("\r\n");
+        download(`${defaultFileName()}.csv`, "\uFEFF" + csv, "text/csv;charset=utf-8");
+        flash("CSV exported.");
+      }
+
+      function exportJson() {
+        updateActionTimestamp();
+        saveCurrentForm(false);
+        const backup = {
+          appVersion: VERSION,
+          documentReference: DOCUMENT_REFERENCE,
+          generatedTimestamp: $("#generatedTimestamp").textContent,
+          exportedAt: new Date().toISOString(),
+          currentForm: getFormData(),
+          rosters: getRosters()
+        };
+        download(`${defaultFileName()}.json`, JSON.stringify(backup, null, 2), "application/json");
+        flash("JSON backup downloaded.");
+      }
+
+      function importJsonData(raw) {
+        const data = raw.currentForm || raw;
+        if (raw.rosters && typeof raw.rosters === "object") {
+          localStorage.setItem(ROSTER_KEY, JSON.stringify(raw.rosters));
+        }
+        const header = data.header || {};
+        const context = {
+          course: header.course || "",
+          year: String(header.year || new Date().getFullYear()),
+          month: header.month || MONTHS[new Date().getMonth()]
+        };
+        applyFormData(data, context);
+        currentContext = context;
+        saveCurrentForm(false, context);
+      }
+
+      function findCourseCode(courseText) {
+        const normalized = String(courseText || "").trim().toUpperCase();
+        if (COURSES[normalized]) return normalized;
+        return Object.entries(COURSES).find(([code, name]) =>
+          normalized === name.toUpperCase() || normalized.includes(`(${code})`) || normalized.includes(name.toUpperCase())
+        )?.[0] || "";
+      }
+
+      function migrateOldData() {
+        const oldRaw = localStorage.getItem(OLD_STORAGE_KEY);
+        if (!oldRaw || localStorage.getItem(GLOBAL_KEY)) return null;
+        try {
+          const old = JSON.parse(oldRaw);
+          const header = old.header || {};
+          const course = findCourseCode(header.course);
+          const context = {
+            course,
+            year: String(header.year || new Date().getFullYear()),
+            month: header.month || MONTHS[new Date().getMonth()]
+          };
+          const migrated = {
+            schemaVersion: 3,
+            appVersion: VERSION,
+            savedAt: new Date().toISOString(),
+            header: {
+              ...header,
+              course,
+              sameDates: false,
+              printOrientation: "portrait"
+            },
+            students: (old.students || []).map(student => ({
+              ...student,
+              actualDays: [...(student.actualDays || []), "", ""].slice(0, SLOT_COUNT),
+              replacementDays: [...(student.replacementDays || []), "", ""].slice(0, SLOT_COUNT)
+            }))
+          };
+          localStorage.setItem(formStorageKey(context), JSON.stringify(migrated));
+          if (course) {
+            localStorage.setItem(ROSTER_KEY, JSON.stringify({
+              [course]: migrated.students.map(student => student.name).filter(Boolean)
+            }));
+          }
+          localStorage.setItem(GLOBAL_KEY, JSON.stringify({
+            teacherName: header.teacherName || "",
+            timeFrom: header.timeFrom || "",
+            timeTo: header.timeTo || "",
+            paymentMode: header.paymentMode || "Fixed Monthly",
+            standard: header.standard || "",
+            defaultMonthlyFee: header.defaultMonthlyFee || "90.00",
+            venueRate: header.venueRate || "5.00",
+            printOrientation: "portrait",
+            lastContext: context,
+            appVersion: VERSION
+          }));
+          return context;
+        } catch (error) {
+          console.warn("Old data migration skipped:", error);
+          return null;
+        }
+      }
+
+      function resetForm() {
+        if (!confirm("Clear this course/month form and start again? The saved student roster for the selected course will be retained.")) return;
+        const context = getContextFromUi();
+        localStorage.removeItem(formStorageKey(context));
+        applyingData = true;
+        try {
+          $("#serialNo").value = generateSerial(context.course);
+          $("#sameDates").checked = false;
+          clearRows();
+          addRowsFromRoster(context.course);
+          refreshAllDayOptions();
+          recalcTotals();
+        } finally {
+          applyingData = false;
+        }
+        saveCurrentForm(false, context);
+        flash("Current monthly form reset. The course student roster was retained.");
+      }
+
+      function preparePrint() {
+        updateActionTimestamp();
+        saveCurrentForm(false);
+        updatePrintOrientation();
+        prepareRowsForOutput();
+        if (!document.body.dataset.printing) {
+          titleBeforePrint = document.title;
+          document.body.dataset.printing = "true";
+        }
+        document.title = defaultFileName();
+      }
+
+      function initialiseSlotHeaders() {
+        const headerRow = $("#slotHeaders");
+        for (let index = 1; index <= SLOT_COUNT; index += 1) {
+          const th = document.createElement("th");
+          th.className = "slot-header";
+          th.textContent = String(index);
+          headerRow.append(th);
+        }
+      }
+
+      function initialise() {
+        initialiseSlotHeaders();
+        $("#toolbarVersion").textContent = VERSION;
+        $("#versionPreview").textContent = VERSION;
+
+        const now = new Date();
+        $("#year").value = now.getFullYear();
+        $("#month").value = MONTHS[now.getMonth()];
+        $("#paymentMode").value = "Fixed Monthly";
+        $("#printOrientation").value = "portrait";
+        updateActionTimestamp();
+
+        const migratedContext = migrateOldData();
+        const lastContext = loadGlobalSettings() || migratedContext || getContextFromUi();
+        const initialContext = {
+          course: lastContext.course || "",
+          year: String(lastContext.year || now.getFullYear()),
+          month: lastContext.month || MONTHS[now.getMonth()]
+        };
+        loadContext(initialContext, migratedContext ? { message: "Previous form data upgraded to the new version." } : {});
+
+        $("#addStudentTableBtn").addEventListener("click", () => {
+          makeStudentRow();
+          scheduleSave();
+        });
+        $("#saveBtn").addEventListener("click", () => saveCurrentForm(true));
+        $("#downloadBtn").addEventListener("click", exportJson);
+        $("#importBtn").addEventListener("click", () => $("#importFile").click());
+        $("#importFile").addEventListener("change", async event => {
+          const file = event.target.files?.[0];
+          if (!file) return;
+          try {
+            importJsonData(JSON.parse(await file.text()));
+            flash("JSON data imported and saved.");
+          } catch (error) {
+            console.error(error);
+            flash("The selected file is not a valid form backup.", true);
+          } finally {
+            event.target.value = "";
+          }
+        });
+        $("#csvBtn").addEventListener("click", exportCsv);
+        $("#printBtn").addEventListener("click", () => {
+          preparePrint();
+          window.setTimeout(() => window.print(), 60);
+        });
+        $("#resetBtn").addEventListener("click", resetForm);
+
+        $("#course").addEventListener("change", handleContextChange);
+        $("#month").addEventListener("change", () => {
+          handleContextChange();
+          refreshAllDayOptions(true);
+        });
+        $("#year").addEventListener("change", () => {
+          handleContextChange();
+          refreshAllDayOptions(true);
+        });
+
+        $("#sameDates").addEventListener("change", () => {
+          if ($("#sameDates").checked) applySharedDatesToAll();
+          scheduleSave();
+        });
+
+        $("#venueRate").addEventListener("change", () => {
+          const rate = money($("#venueRate").value) / 100;
+          getActualRows().forEach(row => {
+            const monthly = money($(".monthly-fee", row).value);
+            $(".venue-fee", row).value = displayMoney(monthly < 0 ? 0 : monthly * rate);
+            recalcRow(row);
+          });
+        });
+
+        $("#defaultMonthlyFee").addEventListener("change", scheduleSave);
+        $("#printOrientation").addEventListener("change", () => {
+          updatePrintOrientation();
+          scheduleSave();
+        });
+
+        ["teacherName", "timeFrom", "timeTo", "paymentMode"].forEach(id => {
+          const element = $("#" + id);
+          element.addEventListener("input", scheduleSave);
+          element.addEventListener("change", scheduleSave);
+        });
+
+        window.addEventListener("beforeprint", preparePrint);
+        window.addEventListener("afterprint", () => {
+          document.title = titleBeforePrint || "MYEDEN Monthly Tuition / Enrichment Class Payment";
+          restoreRowsAfterOutput();
+          delete document.body.dataset.printing;
+        });
+      }
+
+      // ---- Integration points for the Supabase/auth layer (separate script block below) ----
+      // Deliberately minimal exposure rather than restructuring this proven, self-contained module.
+      window.TEC_getFormData = getFormData;
+
+      window.TEC_setCourseOptions = function(courses){
+        // courses: [{name}, ...] from tec_courses, admin-managed
+        Object.keys(COURSES).forEach(k => delete COURSES[k]);
+        courses.forEach(c => { COURSES[c.name] = c.name; });
+        const select = $("#course");
+        const previous = select.value;
+        select.replaceChildren(new Option("-- Select Course --", ""));
+        courses.forEach(c => select.add(new Option(c.name, c.name)));
+        if (courses.some(c => c.name === previous)) select.value = previous;
+      };
+
+      window.TEC_setStandardOptions = function(standards){
+        // standards: [{name}, ...] from tec_standards, admin-managed, in sort order
+        const container = $("#standardCheckboxes");
+        const previouslyChecked = new Set($$("input:checked", container).map(cb => cb.value));
+        container.replaceChildren();
+        standards.forEach(s => {
+          const label = document.createElement("label");
+          const cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.value = s.name;
+          cb.checked = previouslyChecked.has(s.name);
+          cb.addEventListener("change", scheduleSave);
+          label.append(cb, document.createTextNode(s.name));
+          container.append(label);
+        });
+      };
+
+      window.TEC_getCheckedStandards = function(){
+        return $$("#standardCheckboxes input:checked").map(cb => cb.value);
+      };
+
+      // Applies a previous submission's student roster (names + fees only —
+      // Actual/Replacement Day slots intentionally left blank for the new month).
+      window.TEC_applyStudentsTemplate = function(students){
+        clearRows();
+        (students || []).forEach(s => {
+          makeStudentRow({ name: s.name, monthlyFee: s.monthlyFee, venueFee: s.venueFee });
+        });
+        makeStudentRow();
+        recalcTotals();
+        scheduleSave();
+      };
+
+      // Full population (including Actual/Replacement Day slots) for the PIC's
+      // read-only review/print tab — unlike TEC_applyStudentsTemplate, nothing
+      // is left blank here since this is meant to reproduce the submission as-is.
+      window.TEC_applyFullSubmission = function(sub){
+        $("#teacherName").value = sub.teacher_name || "";
+        $("#course").value = sub.course_name || "";
+        $("#year").value = sub.year || "";
+        $("#month").value = MONTHS[(sub.month||1)-1] || MONTHS[0];
+        $("#serialNo").value = sub.serial_no || "";
+        const companySelect = $("#companySelect");
+        if(companySelect) companySelect.value = sub.company_code || "MEG";
+        clearRows();
+        (sub.students || []).forEach(s => makeStudentRow({
+          name: s.name, actualDays: s.actualDays, replacementDays: s.replacementDays,
+          monthlyFee: s.monthlyFee, venueFee: s.venueFee, netPay: s.netPay
+        }));
+        recalcTotals();
+      };
+
+      window.TEC_recalcTotals = recalcTotals;
+      window.TEC_clearRows = clearRows;
+      window.TEC_makeStudentRow = makeStudentRow;
+
+      initialise();
+    })();
+  </script>
+
+<script>
+/* ===================== SUPABASE / AUTH / SUBMISSIONS (MEG-TEC) ===================== */
+const SUPABASE_URL = "https://vzngfswtofegimfcoigx.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bmdmc3d0b2ZlZ2ltZmNvaWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyODA5MzUsImV4cCI6MjEwMDg1NjkzNX0.47rTrOjzNgxarCBYGapqajLw5v_yATbeKitiyP6a2Sg";
+let sb = null;
+try{
+  if(!window.supabase) throw new Error("Supabase SDK failed to load");
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}catch(e){
+  console.error("Failed to initialize Supabase client:", e);
+  document.addEventListener('DOMContentLoaded', showScriptErrorFallback);
+  if(document.readyState !== 'loading') showScriptErrorFallback();
+}
+function showScriptErrorFallback(){
+  document.getElementById('authBoxLogin').style.display = 'none';
+  document.getElementById('authBoxSignup').style.display = 'none';
+  document.getElementById('authBoxPending').style.display = 'none';
+  document.getElementById('authBoxScriptError').style.display = 'block';
+  document.getElementById('authOverlay').style.display = 'flex';
+}
+const FORM_CODE = "tec";
+const EDGE_FN_URL = SUPABASE_URL + "/functions/v1/tec-notify";
+
+let currentUser = null, currentProfile = null, currentPerm = null;
+
+function showAuthBox(which){
+  document.getElementById('authBoxLogin').style.display = which==='login' ? 'block':'none';
+  document.getElementById('authBoxSignup').style.display = which==='signup' ? 'block':'none';
+  document.getElementById('authBoxPending').style.display = which==='pending' ? 'block':'none';
+  document.getElementById('authBoxForgot').style.display = which==='forgot' ? 'block':'none';
+  document.getElementById('authBoxNewPassword').style.display = which==='newpassword' ? 'block':'none';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('signupError').textContent = '';
+  const fe = document.getElementById('forgotError'); if(fe) fe.textContent = '';
+  const ne = document.getElementById('newPasswordError'); if(ne) ne.textContent = '';
+}
+
+function togglePwVisibility(inputId, btn){
+  const input = document.getElementById(inputId);
+  const showing = input.type === 'text';
+  input.type = showing ? 'password' : 'text';
+  btn.textContent = showing ? '👁' : '🙈';
+}
+
+function clearAuthFields(){
+  ['loginEmail','loginPassword','signupName','signupEmail','signupPassword','forgotEmail','newPasswordInput'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  document.querySelectorAll('.pw-wrap input[type="text"]').forEach(inp=>{ inp.type = 'password'; });
+  document.querySelectorAll('.pw-toggle').forEach(btn=>{ btn.textContent = '👁'; });
+}
+
+async function doForgotPassword(){
+  const email = document.getElementById('forgotEmail').value.trim();
+  const errEl = document.getElementById('forgotError');
+  errEl.textContent = '';
+  if(!email){ errEl.textContent = 'Enter your email.'; return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
+  });
+  if(error){ errEl.textContent = error.message; return; }
+  alert('If an account exists for that email, a reset link has been sent. Check your inbox (and spam folder).');
+  showAuthBox('login');
+}
+
+async function doSetNewPassword(){
+  const pw = document.getElementById('newPasswordInput').value;
+  const errEl = document.getElementById('newPasswordError');
+  errEl.textContent = '';
+  if(!pw || pw.length < 6){ errEl.textContent = 'Password must be at least 6 characters.'; return; }
+  const { error } = await sb.auth.updateUser({ password: pw });
+  if(error){ errEl.textContent = error.message; return; }
+  alert('Password updated. Please sign in with your new password.');
+  await sb.auth.signOut();
+  clearAuthFields();
+  showAuthBox('login');
+}
+async function doSignIn(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  if(!email || !password){ errEl.textContent = 'Enter email and password.'; return; }
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if(error){ errEl.textContent = error.message; return; }
+  await onAuthReady();
+}
+async function doSignUp(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const errEl = document.getElementById('signupError');
+  errEl.textContent = '';
+  if(!name || !email || !password){ errEl.textContent = 'Fill in all fields.'; return; }
+  if(password.length < 6){ errEl.textContent = 'Password must be at least 6 characters.'; return; }
+  const { error } = await sb.auth.signUp({ email, password, options:{ data:{ full_name:name } } });
+  if(error){ errEl.textContent = error.message; return; }
+  await onAuthReady();
+}
+async function doSignOut(){
+  await sb.auth.signOut();
+  currentUser = null; currentProfile = null; currentPerm = null;
+  document.getElementById('authOverlay').style.display = 'flex';
+  document.getElementById('topUserBar').style.display = 'none';
+  clearAuthFields();
+  showAuthBox('login');
+}
+
+async function loadTecLists(){
+  const [{ data: courses }, { data: standards }] = await Promise.all([
+    sb.from('tec_courses').select('name').order('name'),
+    sb.from('tec_standards').select('name').order('sort_order')
+  ]);
+  window.TEC_setCourseOptions(courses || []);
+  window.TEC_setStandardOptions(standards || []);
+}
+
+async function onAuthReady(){
+  const { data: { user } } = await sb.auth.getUser();
+  if(!user){ showAuthBox('login'); return; }
+  currentUser = { id: user.id, email: user.email };
+
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  currentProfile = profile;
+
+  const { data: perm } = await sb.from('form_permissions').select('*')
+    .eq('user_id', user.id).eq('form_code', FORM_CODE).maybeSingle();
+  currentPerm = perm || null;
+
+  if(!currentPerm || (!currentPerm.can_submit && !currentPerm.can_approve && !currentPerm.is_admin)){
+    showAuthBox('pending');
+    return;
+  }
+
+  document.getElementById('authOverlay').style.display = 'none';
+  document.getElementById('topUserBar').style.display = 'flex';
+  document.getElementById('topUserLabel').textContent =
+    `Signed in as ${currentProfile?.full_name || currentUser.email}${currentPerm.is_admin ? ' (Admin)' : (currentPerm.can_approve ? ' (PIC)' : '')}`;
+
+  await loadTecLists();
+
+  if(currentPerm.can_submit){
+    // Auto-fill Teacher's Name with the signed-in user's name, still editable
+    const teacherNameInput = document.getElementById('teacherName');
+    if(currentProfile?.full_name && !teacherNameInput.value){
+      teacherNameInput.value = currentProfile.full_name;
+    }
+    document.getElementById('submitBtn').style.display = 'inline-block';
+    document.getElementById('loadPrevMonthBtn').style.display = 'inline-block';
+  } else {
+    document.getElementById('submitBtn').style.display = 'none';
+    document.getElementById('loadPrevMonthBtn').style.display = 'none';
+  }
+
+  if(currentPerm.is_admin){
+    document.getElementById('btnManageLists').style.display = 'inline-block';
+  }
+
+  if(currentPerm.can_approve || currentPerm.is_admin){
+    document.getElementById('btnPicReview').style.display = 'inline-block';
+    document.getElementById('btnPicReports').style.display = 'inline-block';
+  }
+
+  // A specific submission requested via ?review=<id> — e.g. opened from the
+  // Review list's "View & Print" link in a fresh tab, so it never risks
+  // touching whatever this PIC might have open in her own tab elsewhere.
+  const reviewId = new URLSearchParams(window.location.search).get('review');
+  if(reviewId){
+    if(currentPerm.can_approve || currentPerm.is_admin){
+      await loadReviewModeSubmission(reviewId);
+    } else {
+      alert("You don't have permission to review submissions.");
+    }
+    return;
+  }
+
+  // PIC-only account with no submit rights of her own — the teacher form
+  // isn't relevant to her, land directly on the Review screen instead.
+  if(!currentPerm.can_submit && (currentPerm.can_approve || currentPerm.is_admin)){
+    showPicReviewScreen();
+  }
+}
+
+function generateTecSerial(courseName){
+  const now = new Date();
+  const pad2 = n => String(n).padStart(2, '0');
+  const coursePart = (courseName || 'TEC').replace(/[^a-z0-9]+/gi, '').slice(0, 6).toUpperCase() || 'TEC';
+  return `${coursePart}-${pad2(now.getDate())}${pad2(now.getMonth()+1)}${now.getFullYear()}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
+}
+
+async function submitTecForm(){
+  const formData = window.TEC_getFormData();
+  const header = formData.header;
+
+  if(!header.course){ alert('Please select a Course before submitting.'); return; }
+  if(!formData.students || formData.students.length === 0){ alert('Add at least one student before submitting.'); return; }
+  const standards = window.TEC_getCheckedStandards();
+  if(standards.length === 0){ alert('Please select at least one Standard before submitting.'); return; }
+
+  const companyCode = document.getElementById('companySelect').value;
+  const serialNo = generateTecSerial(header.course);
+
+  if(!confirm(`Submit this ${header.course} claim for ${header.month} ${header.year} to the PIC?`)) return;
+
+  const payload = {
+    submitted_by: currentUser.id,
+    teacher_name: header.teacherName,
+    course_name: header.course,
+    standards,
+    company_code: companyCode,
+    month: (["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"].indexOf(header.month) + 1) || new Date().getMonth()+1,
+    year: parseInt(header.year, 10) || new Date().getFullYear(),
+    serial_no: serialNo,
+    students: formData.students,
+    status: 'submitted'
+  };
+
+  const { data, error } = await sb.from('tec_submissions').insert(payload).select().single();
+  if(error){ alert('Failed to submit: ' + error.message); return; }
+
+  document.getElementById('serialNo').value = serialNo;
+  notifyTecEdgeFunction('submitted', data.id);
+  alert(`Submitted. Serial No: ${serialNo}. The PIC has been notified.`);
+}
+
+async function notifyTecEdgeFunction(event, submissionId){
+  try{
+    await fetch(EDGE_FN_URL, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+SUPABASE_ANON_KEY },
+      body: JSON.stringify({ event, submission_id: submissionId })
+    });
+  }catch(e){ console.error('Notify edge function failed (non-fatal):', e); }
+}
+
+async function loadPreviousMonthTemplate(){
+  const courseName = document.getElementById('course').value;
+  if(!courseName){ alert('Select a Course first, then load its previous roster.'); return; }
+  const { data, error } = await sb.from('tec_submissions')
+    .select('students, standards')
+    .eq('submitted_by', currentUser.id)
+    .eq('course_name', courseName)
+    .order('submitted_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if(error){ alert('Failed to load previous template: ' + error.message); return; }
+  if(!data){ alert(`No previous submission found for ${courseName} yet.`); return; }
+  if(!confirm(`Load the student roster (names + fees) from your last ${courseName} submission? Dates will stay blank for the new month.`)) return;
+  window.TEC_applyStudentsTemplate(data.students);
+  if(Array.isArray(data.standards)){
+    document.querySelectorAll('#standardCheckboxes input').forEach(cb=>{
+      cb.checked = data.standards.includes(cb.value);
+    });
+  }
+}
+
+document.getElementById('submitBtn').addEventListener('click', submitTecForm);
+document.getElementById('loadPrevMonthBtn').addEventListener('click', loadPreviousMonthTemplate);
+document.getElementById('btnManageLists').addEventListener('click', openManageModal);
+
+/* ---------- Manage Lists (admin only): Courses, Standards, Users ---------- */
+function escapeHtmlTec(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+let currentManageTab = 'courses';
+function openManageModal(){
+  document.getElementById('manageListsModal').style.display = 'flex';
+  showManageTab('courses');
+}
+function closeManageModal(){
+  document.getElementById('manageListsModal').style.display = 'none';
+}
+function showManageTab(tab){
+  currentManageTab = tab;
+  document.querySelectorAll('.manage-tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', ['courses','standards','users'][i] === tab);
+  });
+  if(tab === 'courses') renderCoursesTab();
+  else if(tab === 'standards') renderStandardsTab();
+  else if(tab === 'users') renderUsersTab();
+}
+
+async function renderCoursesTab(){
+  const cont = document.getElementById('manageListContent');
+  cont.innerHTML = '<div class="manage-empty">Loading...</div>';
+  const { data, error } = await sb.from('tec_courses').select('*').order('name');
+  if(error){ cont.innerHTML = '<div class="manage-empty">Failed to load courses.</div>'; return; }
+  cont.innerHTML = `
+    <div class="manage-add-row">
+      <input type="text" id="newCourseName" placeholder="New course name (e.g. Bahasa Melayu)">
+      <button onclick="addTecCourse()">+ Add</button>
+    </div>
+    <div id="manageListItems"></div>`;
+  const itemsEl = document.getElementById('manageListItems');
+  itemsEl.innerHTML = (data && data.length)
+    ? data.map(c => `<div class="manage-list-item"><span>${escapeHtmlTec(c.name)}</span><button class="manage-delete-btn" onclick="deleteTecCourse('${c.id}')">✕</button></div>`).join('')
+    : '<div class="manage-empty">No courses yet.</div>';
+}
+async function addTecCourse(){
+  const input = document.getElementById('newCourseName');
+  const name = input.value.trim();
+  if(!name) return;
+  const { error } = await sb.from('tec_courses').insert({ name, created_by: currentUser.id });
+  if(error){ alert('Failed to add course: ' + error.message); return; }
+  input.value = '';
+  await renderCoursesTab();
+  await loadTecLists();
+}
+async function deleteTecCourse(id){
+  if(!confirm('Remove this course from the list?')) return;
+  const { error } = await sb.from('tec_courses').delete().eq('id', id);
+  if(error){ alert('Failed to remove course: ' + error.message); return; }
+  await renderCoursesTab();
+  await loadTecLists();
+}
+
+async function renderStandardsTab(){
+  const cont = document.getElementById('manageListContent');
+  cont.innerHTML = '<div class="manage-empty">Loading...</div>';
+  const { data, error } = await sb.from('tec_standards').select('*').order('sort_order');
+  if(error){ cont.innerHTML = '<div class="manage-empty">Failed to load standards.</div>'; return; }
+  cont.innerHTML = `
+    <div class="manage-add-row">
+      <input type="text" id="newStandardName" placeholder="New standard (e.g. P1)">
+      <button onclick="addTecStandard()">+ Add</button>
+    </div>
+    <div id="manageListItems"></div>`;
+  const itemsEl = document.getElementById('manageListItems');
+  itemsEl.innerHTML = (data && data.length)
+    ? data.map(s => `<div class="manage-list-item"><span>${escapeHtmlTec(s.name)}</span><button class="manage-delete-btn" onclick="deleteTecStandard('${s.id}')">✕</button></div>`).join('')
+    : '<div class="manage-empty">No standards yet.</div>';
+  window.__lastStandardsCount = (data || []).length;
+}
+async function addTecStandard(){
+  const input = document.getElementById('newStandardName');
+  const name = input.value.trim();
+  if(!name) return;
+  const { error } = await sb.from('tec_standards').insert({ name, sort_order: window.__lastStandardsCount || 0, created_by: currentUser.id });
+  if(error){ alert('Failed to add standard: ' + error.message); return; }
+  input.value = '';
+  await renderStandardsTab();
+  await loadTecLists();
+}
+async function deleteTecStandard(id){
+  if(!confirm('Remove this standard from the list?')) return;
+  const { error } = await sb.from('tec_standards').delete().eq('id', id);
+  if(error){ alert('Failed to remove standard: ' + error.message); return; }
+  await renderStandardsTab();
+  await loadTecLists();
+}
+
+async function renderUsersTab(){
+  const cont = document.getElementById('manageListContent');
+  cont.innerHTML = '<div class="manage-empty">Loading users...</div>';
+  const { data: profiles } = await sb.from('profiles').select('*').order('full_name');
+  const { data: perms } = await sb.from('form_permissions').select('*').eq('form_code', FORM_CODE);
+  const permMap = {};
+  (perms||[]).forEach(p=>{ permMap[p.user_id] = p; });
+  if(!profiles || profiles.length===0){ cont.innerHTML = '<div class="manage-empty">No users found.</div>'; return; }
+  cont.innerHTML = profiles.map(p=>{
+    const perm = permMap[p.id] || { can_submit:false, can_approve:false, is_admin:false };
+    return `
+      <div class="manage-list-item" style="flex-direction:column;align-items:flex-start;gap:4px;">
+        <div style="font-weight:600;">${escapeHtmlTec(p.full_name)} <span style="color:#888;font-weight:400;">(${escapeHtmlTec(p.status)})</span></div>
+        <div style="display:flex;gap:12px;font-size:12px;flex-wrap:wrap;">
+          <label><input type="checkbox" ${perm.can_submit?'checked':''} onchange="updateTecUserPermission('${p.id}','can_submit',this.checked)"> Teacher (Can Submit)</label>
+          <label><input type="checkbox" ${perm.can_approve?'checked':''} onchange="updateTecUserPermission('${p.id}','can_approve',this.checked)"> PIC (Can Review)</label>
+          <label><input type="checkbox" ${perm.is_admin?'checked':''} onchange="updateTecUserPermission('${p.id}','is_admin',this.checked)"> Admin</label>
+        </div>
+      </div>`;
+  }).join('');
+}
+async function updateTecUserPermission(userId, field, value){
+  try{
+    const { data: existing } = await sb.from('form_permissions').select('*')
+      .eq('user_id', userId).eq('form_code', FORM_CODE).maybeSingle();
+    if(existing){
+      await sb.from('form_permissions').update({ [field]: value }).eq('id', existing.id);
+    } else {
+      await sb.from('form_permissions').insert({
+        user_id: userId, form_code: FORM_CODE,
+        can_submit: field==='can_submit'?value:false,
+        can_approve: field==='can_approve'?value:false,
+        is_admin: field==='is_admin'?value:false
+      });
+    }
+    if(value){
+      await sb.from('profiles').update({ status:'active' }).eq('id', userId).eq('status','pending');
+    }
+    await renderUsersTab();
+  }catch(e){
+    console.error('Failed to update permission', e);
+    alert('Failed to update permission: ' + e.message);
+  }
+}
+
+const TEC_MONTHS = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+
+/* ---------- PIC Review screen ---------- */
+function showPicReviewScreen(){
+  document.getElementById('mainFormArea').style.display = 'none';
+  document.getElementById('picReportsScreen').style.display = 'none';
+  document.getElementById('picReviewScreen').style.display = 'block';
+  renderPicReviewList();
+}
+function showMainFormArea(){
+  document.getElementById('picReviewScreen').style.display = 'none';
+  document.getElementById('picReportsScreen').style.display = 'none';
+  document.getElementById('mainFormArea').style.display = 'block';
+}
+function showPicReportsScreen(){
+  document.getElementById('mainFormArea').style.display = 'none';
+  document.getElementById('picReviewScreen').style.display = 'none';
+  document.getElementById('picReportsScreen').style.display = 'block';
+  populateReportFilterOptions();
+}
+
+async function renderPicReviewList(){
+  const listEl = document.getElementById('picReviewList');
+  listEl.innerHTML = '<div class="manage-empty">Loading...</div>';
+  const status = document.getElementById('reviewStatusFilter').value;
+  let query = sb.from('tec_submissions')
+    .select('id, teacher_name, course_name, standards, company_code, month, year, students, serial_no, status, submitted_at, done_at');
+  if(status) query = query.eq('status', status);
+  query = query.order('submitted_at', { ascending: false });
+  const { data, error } = await query;
+  if(error){ listEl.innerHTML = '<div class="manage-empty">Failed to load submissions.</div>'; console.error(error); return; }
+  if(!data || data.length === 0){ listEl.innerHTML = '<div class="manage-empty">No submissions match this filter.</div>'; return; }
+
+  listEl.innerHTML = data.map(sub=>{
+    const monthName = TEC_MONTHS[(sub.month||1)-1] || '';
+    const netTotal = (sub.students||[]).reduce((sum,s)=> sum + (Number(s.netPay)||0), 0);
+    const studentCount = (sub.students||[]).length;
+    const doneAction = sub.status === 'submitted'
+      ? `<button class="done-btn" onclick="markTecSubmissionDone('${sub.id}')">✔ Mark as Done</button>`
+      : `<span style="color:#2e8b57;font-weight:600;">✔ Done</span>`;
+    return `
+      <div class="pic-row">
+        <div class="pic-row-info">
+          <div class="name">${escapeHtmlTec(sub.teacher_name)} — ${escapeHtmlTec(sub.course_name)} (${escapeHtmlTec((sub.standards||[]).join(', '))})</div>
+          <div class="meta">${escapeHtmlTec(monthName)} ${sub.year} · ${studentCount} student${studentCount===1?'':'s'} · Net Pay Total: RM ${netTotal.toFixed(2)} · Serial: ${escapeHtmlTec(sub.serial_no)}</div>
+        </div>
+        <div class="pic-row-actions">
+          <a href="?review=${sub.id}" target="_blank" rel="noopener">🖨️ View &amp; Print</a>
+          ${doneAction}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+async function markTecSubmissionDone(id){
+  if(!confirm('Mark this submission as Done?')) return;
+  const { error } = await sb.from('tec_submissions').update({
+    status: 'done',
+    done_by: currentUser.id,
+    done_by_name: currentProfile?.full_name || currentUser.email,
+    done_at: new Date().toISOString()
+  }).eq('id', id);
+  if(error){ alert('Failed to mark as done: ' + error.message); return; }
+  await renderPicReviewList();
+}
+
+/* ---------- PIC Reports screen ---------- */
+async function populateReportFilterOptions(){
+  const courseSel = document.getElementById('reportCourseFilter');
+  const standardSel = document.getElementById('reportStandardFilter');
+  const monthSel = document.getElementById('reportMonthFilter');
+  if(monthSel.options.length <= 1){
+    TEC_MONTHS.forEach((name, idx)=>{
+      const o = document.createElement('option');
+      o.value = String(idx+1);
+      o.textContent = name;
+      monthSel.appendChild(o);
+    });
+  }
+  if(courseSel.options.length <= 1){
+    const { data: courses } = await sb.from('tec_courses').select('name').order('name');
+    (courses||[]).forEach(c=>{
+      const o = document.createElement('option'); o.value = c.name; o.textContent = c.name;
+      courseSel.appendChild(o);
+    });
+  }
+  if(standardSel.options.length <= 1){
+    const { data: standards } = await sb.from('tec_standards').select('name').order('sort_order');
+    (standards||[]).forEach(s=>{
+      const o = document.createElement('option'); o.value = s.name; o.textContent = s.name;
+      standardSel.appendChild(o);
+    });
+  }
+}
+
+async function runTecReport(){
+  const summaryEl = document.getElementById('reportSummary');
+  const listEl = document.getElementById('reportList');
+  summaryEl.innerHTML = '';
+  listEl.innerHTML = '<div class="manage-empty">Running report...</div>';
+
+  const teacher = document.getElementById('reportTeacherFilter').value.trim();
+  const course = document.getElementById('reportCourseFilter').value;
+  const standard = document.getElementById('reportStandardFilter').value;
+  const month = document.getElementById('reportMonthFilter').value;
+  const year = document.getElementById('reportYearFilter').value;
+
+  let query = sb.from('tec_submissions').select('id, teacher_name, course_name, standards, month, year, students, serial_no, status');
+  if(teacher) query = query.ilike('teacher_name', `%${teacher}%`);
+  if(course) query = query.eq('course_name', course);
+  if(standard) query = query.contains('standards', [standard]);
+  if(month) query = query.eq('month', parseInt(month, 10));
+  if(year) query = query.eq('year', parseInt(year, 10));
+  query = query.order('year', { ascending: false }).order('month', { ascending: false });
+
+  const { data, error } = await query;
+  if(error){ listEl.innerHTML = '<div class="manage-empty">Report failed.</div>'; console.error(error); return; }
+  if(!data || data.length === 0){ listEl.innerHTML = '<div class="manage-empty">No submissions match these filters.</div>'; return; }
+
+  let totalStudents = 0, totalNet = 0, totalVenue = 0;
+  data.forEach(sub=>{
+    (sub.students||[]).forEach(s=>{
+      totalStudents += 1;
+      totalNet += Number(s.netPay) || 0;
+      totalVenue += Number(s.venueFee) || 0;
+    });
+  });
+
+  summaryEl.innerHTML = `
+    <div class="report-summary-card">
+      <div>Submissions<b>${data.length}</b></div>
+      <div>Total Students<b>${totalStudents}</b></div>
+      <div>Net Pay Total<b>RM ${totalNet.toFixed(2)}</b></div>
+      <div>Venue Fee Total<b>RM ${totalVenue.toFixed(2)}</b></div>
+    </div>`;
+
+  listEl.innerHTML = data.map(sub=>{
+    const monthName = TEC_MONTHS[(sub.month||1)-1] || '';
+    const netTotal = (sub.students||[]).reduce((sum,s)=> sum + (Number(s.netPay)||0), 0);
+    return `
+      <div class="pic-row">
+        <div class="pic-row-info">
+          <div class="name">${escapeHtmlTec(sub.teacher_name)} — ${escapeHtmlTec(sub.course_name)} (${escapeHtmlTec((sub.standards||[]).join(', '))})</div>
+          <div class="meta">${escapeHtmlTec(monthName)} ${sub.year} · ${(sub.students||[]).length} students · Net Pay: RM ${netTotal.toFixed(2)} · Serial: ${escapeHtmlTec(sub.serial_no)} · ${escapeHtmlTec(sub.status)}</div>
+        </div>
+        <div class="pic-row-actions"><a href="?review=${sub.id}" target="_blank" rel="noopener">🖨️ View</a></div>
+      </div>`;
+  }).join('');
+}
+function clearTecReportFilters(){
+  document.getElementById('reportTeacherFilter').value = '';
+  document.getElementById('reportCourseFilter').value = '';
+  document.getElementById('reportStandardFilter').value = '';
+  document.getElementById('reportMonthFilter').value = '';
+  document.getElementById('reportYearFilter').value = '';
+  document.getElementById('reportSummary').innerHTML = '';
+  document.getElementById('reportList').innerHTML = '';
+}
+
+/* ---------- Read-only "review a specific submission" tab (opened via ?review=<id>) ---------- */
+async function loadReviewModeSubmission(id){
+  const { data, error } = await sb.from('tec_submissions').select('*').eq('id', id).maybeSingle();
+  if(error || !data){ alert('Could not load this submission.'); return; }
+  window.TEC_applyFullSubmission(data);
+  document.querySelectorAll('#standardCheckboxes input').forEach(cb=>{
+    cb.checked = (data.standards||[]).includes(cb.value);
+  });
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('loadPrevMonthBtn').style.display = 'none';
+  const banner = document.createElement('div');
+  banner.className = 'no-print';
+  banner.style.cssText = 'background:#fff8e1;border:1px solid #e6d28a;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;';
+  banner.textContent = `Reviewing ${data.teacher_name}'s submission (read-only) — use Print / PDF above to print for finance.`;
+  document.getElementById('mainFormArea').prepend(banner);
+}
+
+document.getElementById('btnPicReview').addEventListener('click', showPicReviewScreen);
+document.getElementById('btnPicReports').addEventListener('click', showPicReportsScreen);
+document.getElementById('btnBackToForm').addEventListener('click', showMainFormArea);
+document.getElementById('btnBackToFormFromReports').addEventListener('click', showMainFormArea);
+document.getElementById('btnRefreshReview').addEventListener('click', renderPicReviewList);
+document.getElementById('reviewStatusFilter').addEventListener('change', renderPicReviewList);
+document.getElementById('btnRunReport').addEventListener('click', runTecReport);
+document.getElementById('btnClearReport').addEventListener('click', clearTecReportFilters);
+
+window.addEventListener('load', async ()=>{
+  if(!sb){ showScriptErrorFallback(); return; }
+  sb.auth.onAuthStateChange((event, session)=>{
+    if(event === 'PASSWORD_RECOVERY'){
+      document.getElementById('authOverlay').style.display = 'flex';
+      document.getElementById('topUserBar').style.display = 'none';
+      showAuthBox('newpassword');
+      return;
+    }
+    if(session) onAuthReady();
+  });
+  const { data: { session } } = await sb.auth.getSession();
+  if(session) await onAuthReady();
+});
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(e => console.error('SW registration failed:', e));
+  });
+}
+</script>
+</body>
+</html>
