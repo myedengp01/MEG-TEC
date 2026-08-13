@@ -6,9 +6,9 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <!-- Verified package: MEG-TEC v2026.08.13-12:00 -->
+  <!-- Verified package: MEG-TEC v2026.08.13-13:30 -->
   <meta name="description" content="MYEDEN monthly tuition and enrichment class payment form" />
-  <title>MEG-TEC v2026.08.13-12:00</title>
+  <title>MEG-TEC v2026.08.13-13:30</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#124b82">
   <link rel="apple-touch-icon" href="icons/icon-180.png">
@@ -658,6 +658,7 @@
     <div class="auth-forgot"><a onclick="showAuthBox('forgot')">Forgot password?</a></div>
     <button class="auth-submit" onclick="doSignIn()">Sign In</button>
     <div class="auth-toggle">No account yet? <a onclick="showAuthBox('signup')">Sign up</a></div>
+    <div style="text-align:center;font-size:10px;color:#bbb;margin-top:14px;" id="loginVersionStamp"></div>
   </div>
   <div class="auth-box" id="authBoxSignup" style="display:none;">
     <h2>Create Account</h2>
@@ -1011,7 +1012,7 @@
     (() => {
       "use strict";
 
-      const VERSION = "MEG-TEC v2026.08.13-12:00";
+      const VERSION = "MEG-TEC v2026.08.13-13:30";
       const DOCUMENT_REFERENCE = "MEG-FRM-OR-001 v1.0";
       const SLOT_COUNT = 10;
       const STORAGE_BASE = "myeden-monthly-tuition-v2026.07.24";
@@ -1805,6 +1806,7 @@ const TEC_COMPANIES = {
         initialiseSlotHeaders();
         $("#toolbarVersion").textContent = VERSION;
         $("#versionPreview").textContent = VERSION;
+        $("#loginVersionStamp").textContent = VERSION;
         updateCompanyLogo();
 
         const now = new Date();
@@ -2079,13 +2081,25 @@ async function doSignOut(){
   showAuthBox('login');
 }
 
+let cachedTecCourses = [];
 async function loadTecLists(){
   const [{ data: courses }, { data: standards }] = await Promise.all([
-    sb.from('tec_courses').select('name').order('name'),
+    sb.from('tec_courses').select('name, code').order('name'),
     sb.from('tec_standards').select('name').order('sort_order')
   ]);
+  cachedTecCourses = courses || [];
   window.TEC_setCourseOptions(courses || []);
   window.TEC_setStandardOptions(standards || []);
+}
+
+// Looks up the admin-assigned serial code for a course name directly from the
+// managed course list — no parsing, no guessing. Falls back to the course
+// name itself only if a course somehow has no code set (shouldn't normally
+// happen, since adding a course now requires one). Ported from MEG-TEC-V2.
+function lookupCourseCode(courseName){
+  if(!courseName) return '';
+  const match = (cachedTecCourses || []).find(c => c.name === courseName);
+  return (match && match.code) ? match.code : courseName;
 }
 
 async function onAuthReady(){
@@ -2166,7 +2180,7 @@ async function onAuthReady(){
 function generateTecSerial(courseName){
   const now = new Date();
   const pad2 = n => String(n).padStart(2, '0');
-  const coursePart = (courseName || 'TEC').replace(/[^a-z0-9]+/gi, '').slice(0, 6).toUpperCase() || 'TEC';
+  const coursePart = lookupCourseCode(courseName) || 'TEC';
   return `${coursePart}-${pad2(now.getDate())}${pad2(now.getMonth()+1)}${now.getFullYear()}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
 }
 
@@ -2447,22 +2461,44 @@ async function renderCoursesTab(){
   if(error){ cont.innerHTML = '<div class="manage-empty">Failed to load courses.</div>'; return; }
   cont.innerHTML = `
     <div class="manage-add-row">
-      <input type="text" id="newCourseName" placeholder="New course name (e.g. Bahasa Melayu)">
+      <input type="text" id="newCourseName" placeholder="Course name (e.g. Bahasa Melayu)">
+      <input type="text" id="newCourseCode" placeholder="Serial code (e.g. BM)" maxlength="10" style="max-width:120px;">
       <button onclick="addTecCourse()">+ Add</button>
     </div>
+    <div class="manage-empty" style="padding:4px 10px 10px;">Serial code is used directly in the claim's serial number — keep it short.</div>
     <div id="manageListItems"></div>`;
   const itemsEl = document.getElementById('manageListItems');
   itemsEl.innerHTML = (data && data.length)
-    ? data.map(c => `<div class="manage-list-item"><span>${escapeHtmlTec(c.name)}</span><button class="manage-delete-btn" onclick="deleteTecCourse('${c.id}')">✕</button></div>`).join('')
+    ? data.map(c => `
+      <div class="manage-list-item">
+        <span>${escapeHtmlTec(c.name)} <span style="color:var(--muted);font-weight:700;">(${escapeHtmlTec(c.code || '—')})</span></span>
+        <span style="display:flex;gap:2px;">
+          <button class="manage-edit-btn" title="Edit serial code" onclick="editTecCourseCode('${c.id}', ${escapeHtmlTec(JSON.stringify(c.code || ''))})">✏️</button>
+          <button class="manage-delete-btn" onclick="deleteTecCourse('${c.id}')">✕</button>
+        </span>
+      </div>`).join('')
     : '<div class="manage-empty">No courses yet.</div>';
 }
 async function addTecCourse(){
-  const input = document.getElementById('newCourseName');
-  const name = input.value.trim();
-  if(!name) return;
-  const { error } = await sb.from('tec_courses').insert({ name, created_by: currentUser.id });
+  const nameInput = document.getElementById('newCourseName');
+  const codeInput = document.getElementById('newCourseCode');
+  const name = nameInput.value.trim();
+  const code = codeInput.value.trim().toUpperCase();
+  if(!name){ alert('Enter a course name.'); return; }
+  if(!code){ alert('Enter a short serial code for this course (e.g. BM).'); return; }
+  const { error } = await sb.from('tec_courses').insert({ name, code, created_by: currentUser.id });
   if(error){ alert('Failed to add course: ' + error.message); return; }
-  input.value = '';
+  nameInput.value = ''; codeInput.value = '';
+  await renderCoursesTab();
+  await loadTecLists();
+}
+async function editTecCourseCode(id, currentCode){
+  const entered = prompt('Serial code for this course:', currentCode);
+  if(entered === null) return; // cancelled
+  const code = entered.trim().toUpperCase();
+  if(!code){ alert('Serial code cannot be empty.'); return; }
+  const { error } = await sb.from('tec_courses').update({ code }).eq('id', id);
+  if(error){ alert('Failed to update code: ' + error.message); return; }
   await renderCoursesTab();
   await loadTecLists();
 }
