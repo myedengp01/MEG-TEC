@@ -2797,5 +2797,6 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+<script id="meg-clean-footer-timestamps-20260920">(function(){const uvn="v2026.09.20:13:30";function clean(){document.querySelectorAll('body *').forEach(el=>{if(el.children.length)return;const t=(el.textContent||'').trim();if(/^Timestamp:\s*\d{2}[-/]\d{2}[-/]\d{4}[- :]\d{2}:\d{2}/i.test(t)){el.remove();return;}if(/^MEG-TEC\s+v20\d{2}[.\-]\d{2}[.\-]\d{2}[-:]\d{2}:\d{2}$/i.test(t))el.textContent='MEG-TEC '+uvn;});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',clean);else clean();})();</script>
 </body>
 </html>
