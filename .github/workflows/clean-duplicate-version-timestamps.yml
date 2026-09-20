@@ -1,0 +1,36 @@
+name: Clean duplicate TEC version and timestamps
+on:
+  push:
+    paths: ['.github/workflows/clean-duplicate-version-timestamps.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clean visible version and footer timestamps
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html');s=p.read_text(encoding='utf-8')
+          uvn='v2026.09.20:13:30'
+          # Update displayed legacy versions without modifying unrelated claim timestamps.
+          s=re.sub(r'MEG-TEC\s+v20\d{2}[.\-]\d{2}[.\-]\d{2}[-:]\d{2}:\d{2}', 'MEG-TEC '+uvn,s)
+          # Remove only redundant footer timestamp labels, not claim dates or audit timestamps.
+          s=re.sub(r'(?i)<(?:div|p|span|small)\b[^>]*>\s*Timestamp:\s*[^<]*</(?:div|p|span|small)>','',s)
+          marker='meg-clean-footer-timestamps-20260920'
+          if marker not in s:
+            script='''<script id="meg-clean-footer-timestamps-20260920">(function(){const uvn="v2026.09.20:13:30";function clean(){document.querySelectorAll('body *').forEach(el=>{if(el.children.length)return;const t=(el.textContent||'').trim();if(/^Timestamp:\\s*\\d{2}[-/]\\d{2}[-/]\\d{4}[- :]\\d{2}:\\d{2}/i.test(t)){el.remove();return;}if(/^MEG-TEC\\s+v20\\d{2}[.\\-]\\d{2}[.\\-]\\d{2}[-:]\\d{2}:\\d{2}$/i.test(t))el.textContent='MEG-TEC '+uvn;});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',clean);else clean();})();</script>'''
+            s=s.replace('</body>',script+'\n</body>') if '</body>' in s else s+'\n'+script
+          p.write_text(s,encoding='utf-8')
+          print('TEC duplicate display cleaned')
+          PY
+      - name: Commit to production
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if ! git diff --cached --quiet; then git commit -m 'fix: clean duplicate TEC timestamps and align UVN v2026.09.20:13:30' && git push; fi
