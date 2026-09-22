@@ -1,0 +1,56 @@
+name: Release TEC Inline Claim Paid 20260922-2000
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/release-inline-payment-20260922-2000.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Guarded integration and validation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          p=Path('index.html');s=p.read_text(encoding='utf-8')
+          old='v2026.09.20:13:30';new='v2026.09.22-20:00'
+          assert old in s and 'universal-payment-inline.js?v=20260922-2000' not in s
+          assert s.count('async function renderPicReviewList()')==1
+          assert s.count('async function markTecSubmissionDone(id)')==1
+          assert s.count('''        <div class="pic-row-actions">
+          <a href="?review=${sub.id}" target="_blank" rel="noopener">🖨️ View &amp; Print</a>
+          ${doneAction}
+        </div>''')==1
+          s=s.replace('''        <div class="pic-row-actions">
+          <a href="?review=${sub.id}" target="_blank" rel="noopener">🖨️ View &amp; Print</a>
+          ${doneAction}
+        </div>''','''        <div class="pic-row-actions">
+          <a href="?review=${sub.id}" target="_blank" rel="noopener">🖨️ View &amp; Print</a>
+          ${doneAction}
+          <span data-meg-tec-payment-id="${sub.id}" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;">Checking payment status…</span>
+        </div>''',1)
+          s=s.replace(old,new)
+          assert s.count('</body>')>=1
+          head,tail=s.rsplit('</body>',1)
+          assert '</html>' in tail
+          s=head+'<script src="./universal-payment-inline.js?v=20260922-2000" defer></script>\n</body>'+tail
+          assert s.count('data-meg-tec-payment-id=')==1
+          assert s.count('universal-payment-inline.js?v=20260922-2000')==1
+          assert s.count('async function markTecSubmissionDone(id)')==1
+          p.write_text(s,encoding='utf-8')
+          Path('version.json').write_text(json.dumps({'version':new,'uvn':new},indent=2)+'\n',encoding='utf-8')
+          print('PASS: TEC inline payment wired; existing PIC Done preserved; no claim records touched')
+          PY
+          node --check universal-payment-inline.js
+          git diff --check
+          git add index.html version.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git diff --cached --quiet || (git commit -m 'release(TEC): inline Claim Paid, date and Admin Delete v2026.09.22-20:00' && git push origin main)
