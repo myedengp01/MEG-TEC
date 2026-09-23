@@ -1,0 +1,46 @@
+name: TEC version-only correction 20260923
+on:
+  push:
+    paths:
+      - '.github/workflows/tec-uvn-only-20260923.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  uvn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Update displayed UVN only and validate
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          p=Path('index.html')
+          source=p.read_text(encoding='utf-8')
+          old='v2026.09.20:13:30'
+          new='v2026.09.22-20:00'
+          assert old in source, 'Expected prior TEC UVN not found; aborting'
+          assert 'async function renderPicReviewList()' in source
+          assert 'async function markTecSubmissionDone(id)' in source
+          updated=source.replace(old,new)
+          assert old not in updated
+          assert updated.count('async function renderPicReviewList()')==source.count('async function renderPicReviewList()')
+          assert updated.count('async function markTecSubmissionDone(id)')==source.count('async function markTecSubmissionDone(id)')
+          p.write_text(updated,encoding='utf-8')
+          Path('version.json').write_text(json.dumps({'version':new,'uvn':new},indent=2)+'\n',encoding='utf-8')
+          assert json.loads(Path('version.json').read_text())['uvn']==new
+          print('PASS: TEC title, toolbar, footer, metadata and version.json UVN aligned; no business logic changed')
+          PY
+          git diff --check
+          git add index.html version.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(TEC): synchronize display and version.json UVN v2026.09.22-20:00'
+            git push origin main
+          fi
